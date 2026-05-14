@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+
+const VALUES = [
+  { icon:'sparkles', t:'Curățenie', d:'Standarde înalte de igienă și atenție la detalii la fiecare vizită.' },
+  { icon:'heart', t:'Grijă', d:'Tratăm spațiul tău așa cum am trata casa noastră.' },
+  { icon:'shield', t:'Încredere', d:'Personal verificat, asigurat și transparent în toate interacțiunile.' },
+  { icon:'wallet', t:'Accesibilitate', d:'Pachete clare și prețuri corecte, adaptate bugetului tău.' },
+  { icon:'bulb', t:'Inovație', d:'Folosim produse moderne, ecologice și echipamente profesionale.' },
+];
+
+const TEAM = [
+  { initials:'GN', name:'Gabriela N.', role:'Fondatoare & Coordonator operațional' },
+  { initials:'AM', name:'Andrei M.', role:'Team Lead — birouri & spații comerciale' },
+  { initials:'RP', name:'Raluca P.', role:'Specialist curățenie după renovare' },
+];
+
+const STATS = [
+  { value:'200+', l:'clienți satisfăcuți' },
+  { value:'5 ani', l:'experiență' },
+  { value:'1500+', l:'spații curățate' },
+  { value:'4.9★', l:'rating mediu' },
+];
+---
+<Layout
+  title="Despre GNG PureCare — Curățenie București"
+  description="Povestea, valorile și echipa GNG PureCare. Servicii de curățenie profesională în București, construite pe încredere, transparență și atenție la detalii.">
+
+  <section class="bg-surface py-14 md:py-20">
+    <div class="mx-auto max-w-6xl px-4 md:px-6">
+      <nav class="flex items-center gap-1.5 text-sm text-muted-foreground">
+        <a href="/" class="inline-flex items-center gap-1 hover:text-primary"><Icon name="home" class="h-3.5 w-3.5"/> Acasă</a>
+        <Icon name="chevron" class="h-3.5 w-3.5"/>
+        <span class="font-medium text-foreground">Despre</span>
+      </nav>
+      <h1 class="mt-5 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-5xl">Despre GNG PureCare — Partenerul tău de curățenie în București</h1>
+      <p class="mt-4 max-w-2xl text-lg text-muted-foreground">O echipă locală dedicată, construită pe încredere, atenție la detalii și pasiune pentru spații curate.</p>
+    </div>
+  </section>
+
+  <section class="bg-background py-20">
+    <div class="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-2 md:items-center md:px-6">
+      <img src="/images/about-team.jpg" alt="Echipa GNG PureCare" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-[var(--shadow-card)]"/>
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wider text-primary">Povestea noastră</p>
+        <h2 class="mt-2 font-display text-3xl font-bold md:text-4xl">Cum a pornit GNG PureCare</h2>
+        <div class="mt-5 space-y-4 text-muted-foreground">
+          <p>Am pornit la drum cu o idee simplă: curățenia profesională ar trebui să fie un serviciu de încredere, modern și prietenos.</p>
+          <p>Ne-am construit echipa selectând atent fiecare coleg, am ales produse ecologice sigure pentru familii și am creat procese clare.</p>
+          <p><strong class="text-foreground">Ce ne diferențiază:</strong> răspundem rapid, comunicăm transparent, lucrăm cu echipament profesional și garantăm rezultatul. Dacă ceva nu e curat, revenim gratuit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface py-20">
+    <div class="mx-auto max-w-6xl px-4 md:px-6">
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Valorile noastre</h2>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        {VALUES.map(v => (
+          <div class="rounded-2xl bg-card p-6 shadow-[var(--shadow-soft)]">
+            <Icon name={v.icon} class="h-7 w-7 text-primary"/>
+            <h3 class="mt-4 font-display text-lg font-semibold">{v.t}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-muted-foreground">{v.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-background py-20">
+    <div class="mx-auto max-w-6xl px-4 md:px-6">
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Echipa GNG PureCare</h2>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {TEAM.map(m => (
+          <article class="overflow-hidden rounded-3xl bg-surface text-center">
+            <div class="grid aspect-[4/3] place-items-center bg-primary-soft">
+              <span class="font-display text-5xl font-bold text-primary">{m.initials}</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-lg font-semibold">{m.name}</h3>
+              <p class="mt-1 text-sm text-muted-foreground">{m.role}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface py-16">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 md:grid-cols-4 md:px-6">
+      {STATS.map(s => (
+        <div class="rounded-2xl bg-card p-6 text-center shadow-[var(--shadow-soft)]">
+          <p class="font-display text-3xl font-bold text-primary md:text-4xl">{s.value}</p>
+          <p class="mt-1 text-sm text-muted-foreground">{s.l}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-primary py-16">
+    <div class="mx-auto flex max-w-3xl flex-col items-start px-4 text-primary-foreground md:px-6">
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Lucrează cu noi</h2>
+      <p class="mt-3 max-w-xl opacity-90">Cere o ofertă personalizată și descoperă cum poate arăta spațiul tău.</p>
+      <a href="/#oferta" class="mt-6 inline-flex h-12 items-center rounded-full bg-white px-7 font-semibold text-primary hover:bg-white/90">
+        Solicită ofertă <Icon name="arrow" class="ml-1 h-4 w-4"/>
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,48 @@
+---
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const NAV = [
+  { href: '/', label: 'Acasă' },
+  { href: '/servicii', label: 'Servicii' },
+  { href: '/despre', label: 'Despre' },
+  { href: '/contact', label: 'Contact' },
+];
+const isActive = (h: string) => (h === '/' ? path === '/' : path.startsWith(h));
+---
+<header class="sticky top-0 z-50 border-b border-border/60 bg-white/80 backdrop-blur-md">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
+    <a href="/" class="group flex items-center gap-2.5">
+      <svg viewBox="0 0 32 32" class="h-8 w-8" aria-hidden="true">
+        <path d="M16 3c4.5 5 9 10 9 15.5a9 9 0 1 1-18 0C7 13 11.5 8 16 3Z" fill="#008080"/>
+        <path d="M13 17.5c0-2.6 1.6-5 3.6-7" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.7"/>
+      </svg>
+      <span class="font-display text-lg font-bold tracking-tight">GNG <span class="text-primary">PureCare</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex">
+      {NAV.map((item) => (
+        <a href={item.href}
+           class={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${isActive(item.href) ? 'text-primary font-semibold' : 'text-foreground/70 hover:text-primary'}`}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <a href="/contact" class="hidden md:inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover">
+      Cere ofertă
+    </a>
+
+    <details class="md:hidden">
+      <summary class="grid h-11 w-11 place-items-center rounded-full border border-border" aria-label="Meniu">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </summary>
+      <div class="absolute inset-x-0 top-16 border-t border-border bg-background">
+        <nav class="mx-auto flex max-w-6xl flex-col gap-1 p-4">
+          {NAV.map((item) => (
+            <a href={item.href} class={`rounded-lg px-4 py-3 text-sm font-medium ${isActive(item.href) ? 'bg-primary-soft text-primary font-semibold' : 'text-foreground hover:bg-surface'}`}>{item.label}</a>
+          ))}
+          <a href="/contact" class="mt-2 rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground">Cere ofertă</a>
+        </nav>
+      </div>
+    </details>
+  </div>
+</header>

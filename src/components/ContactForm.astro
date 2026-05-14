@@ -1,0 +1,51 @@
+---
+// Formspree endpoint — same as React version
+const FORMSPREE = 'https://formspree.io/f/mrejdjjk';
+const site = import.meta.env.SITE ?? 'https://gngpurecare.ro';
+const thankYouUrl = new URL('/multumim/', site).href;
+
+interface Props {
+  /** Unic pe pagină pentru id-uri accesibile când există mai multe formulare. */
+  instanceId?: string;
+}
+const { instanceId = 'default' } = Astro.props;
+const fieldId = (base: string) => `${base}-${instanceId}`;
+---
+<form action={FORMSPREE} method="POST" class="relative grid gap-4">
+  <input type="hidden" name="_next" value={thankYouUrl}/>
+  <div class="pointer-events-none absolute -left-[9999px] top-0 h-px w-px overflow-hidden opacity-0" aria-hidden="true">
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" title="Nu completa acest câmp"/>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div class="grid gap-2">
+      <label for={fieldId('name')} class="text-sm font-medium">Nume</label>
+      <input id={fieldId('name')} name="name" required placeholder="Ion Popescu" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
+    </div>
+    <div class="grid gap-2">
+      <label for={fieldId('phone')} class="text-sm font-medium">Telefon</label>
+      <input id={fieldId('phone')} name="phone" required placeholder="07xx xxx xxx" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
+    </div>
+  </div>
+  <div class="grid gap-2">
+    <label for={fieldId('email')} class="text-sm font-medium">Email</label>
+    <input id={fieldId('email')} name="email" type="email" required placeholder="nume@exemplu.ro" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
+  </div>
+  <div class="grid gap-2">
+    <label for={fieldId('service')} class="text-sm font-medium">Tip serviciu</label>
+    <select id={fieldId('service')} name="service" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+      <option value="apartament">Apartament</option>
+      <option value="birou">Birou</option>
+      <option value="dupa_renovare">După renovare</option>
+    </select>
+  </div>
+  <div class="grid gap-2">
+    <label for={fieldId('message')} class="text-sm font-medium">Mesaj</label>
+    <textarea id={fieldId('message')} name="message" rows="4" placeholder="Suprafață, frecvență, observații..." class="rounded-md border border-border bg-background px-3 py-2 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"></textarea>
+  </div>
+  <button type="submit" class="mt-2 h-12 rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+    Trimite mesajul
+  </button>
+  <p class="text-center text-xs text-muted-foreground">
+    Răspundem în 24–48 de ore. Datele tale sunt confidențiale.
+  </p>
+</form>

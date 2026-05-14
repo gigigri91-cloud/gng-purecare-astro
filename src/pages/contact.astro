@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { hasSocialLinks, socialLinks } from '../data/social';
+
+const showSocial = hasSocialLinks();
+
+const INFO = [
+  { icon:'phone', label:'Telefon', value:'0747 821 384', href:'tel:+40747821384' },
+  { icon:'mail', label:'Email', value:'contact@gngpurecare.ro', href:'mailto:contact@gngpurecare.ro' },
+  { icon:'pin', label:'Adresă', value:'București, România', href:null },
+  { icon:'clock', label:'Program', value:'Luni–Sâmbătă, 08:00–20:00', href:null },
+];
+const SOCIAL_ENTRIES = [
+  { key: 'facebook' as const, label: 'Facebook', icon: 'facebook' as const },
+  { key: 'instagram' as const, label: 'Instagram', icon: 'instagram' as const },
+  { key: 'linkedin' as const, label: 'LinkedIn', icon: 'linkedin' as const },
+].filter((s) => socialLinks[s.key].trim().length > 0);
+---
+<Layout
+  title="Contact GNG PureCare | Servicii Curățenie București"
+  description="Contactează GNG PureCare pentru servicii de curățenie profesională în București. Răspundem în 24–48 ore.">
+
+  <section class="bg-surface py-16 md:py-20">
+    <div class="mx-auto max-w-5xl px-4 md:px-6">
+      <p class="text-sm font-semibold uppercase tracking-wider text-primary">Contact</p>
+      <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">
+        Contact GNG PureCare — <span class="text-primary">Curățenie profesională București</span>
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-muted-foreground">Sună-ne, scrie-ne sau completează formularul. Îți răspundem în 24–48 de ore cu o ofertă personalizată.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+    <div class="grid gap-10 md:grid-cols-5">
+      <div class="md:col-span-2">
+        <h2 class="font-display text-2xl font-bold">Informații de contact</h2>
+        <p class="mt-2 text-sm text-muted-foreground">Suntem aici pentru orice întrebare.</p>
+        <div class="mt-6 space-y-3">
+          {INFO.map(i => (
+            <div class="flex items-start gap-4 rounded-2xl bg-surface p-4">
+              <Icon name={i.icon} class="mt-0.5 h-5 w-5 flex-shrink-0 text-primary"/>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{i.label}</p>
+                {i.href ? <a href={i.href} class="font-medium hover:text-primary">{i.value}</a> : <p class="font-medium">{i.value}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="mt-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Urmărește-ne</p>
+          {showSocial ? (
+            <div class="mt-3 flex gap-3">
+              {SOCIAL_ENTRIES.map((s) => (
+                <a
+                  href={socialLinks[s.key]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  class="flex h-11 w-11 items-center justify-center rounded-full bg-surface text-primary hover:bg-primary hover:text-primary-foreground"
+                >
+                  <Icon name={s.icon} class="h-5 w-5" />
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="mt-3 text-sm text-muted-foreground">Profilurile pe rețelele sociale vor fi publicate în curând.</p>
+          )}
+        </div>
+      </div>
+
+      <div class="md:col-span-3">
+        <div class="rounded-3xl bg-card p-6 shadow-[var(--shadow-card)] md:p-8">
+          <div class="flex items-center justify-between gap-3">
+            <h2 class="font-display text-2xl font-bold">Trimite-ne un mesaj</h2>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-primary">
+              <Icon name="clock" class="h-3.5 w-3.5"/> 24–48h
+            </span>
+          </div>
+          <div class="mt-6"><ContactForm instanceId="contact"/></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="font-display text-2xl font-bold">Ne găsești în București</h2>
+      <div class="mt-4 overflow-hidden rounded-3xl shadow-[var(--shadow-card)]">
+        <iframe title="Hartă București — GNG PureCare"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=25.96%2C44.36%2C26.22%2C44.52&layer=mapnik"
+          class="h-[400px] w-full border-0" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+</Layout>

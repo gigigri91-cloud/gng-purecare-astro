@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+const today = new Date().toLocaleDateString('ro-RO', { year:'numeric', month:'long', day:'numeric' });
+---
+<Layout
+  title="Politică de confidențialitate | GNG PureCare"
+  description="Politica de confidențialitate GNG PureCare — cum colectăm, folosim și protejăm datele tale personale conform GDPR.">
+
+  <section class="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-20">
+    <nav class="flex items-center gap-1.5 text-sm text-muted-foreground">
+      <a href="/" class="inline-flex items-center gap-1 hover:text-primary"><Icon name="home" class="h-3.5 w-3.5"/> Acasă</a>
+      <Icon name="chevron" class="h-3.5 w-3.5"/>
+      <span class="font-medium text-foreground">Confidențialitate</span>
+    </nav>
+    <h1 class="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl">Politică de confidențialitate</h1>
+    <p class="mt-3 text-sm text-muted-foreground">Ultima actualizare: {today}</p>
+
+    <div class="mt-10 space-y-6 text-base leading-relaxed">
+      <h2 class="font-display text-2xl font-bold">1. Cine suntem</h2>
+      <p>GNG PureCare oferă servicii profesionale de curățenie în București. Această politică descrie cum colectăm, folosim și protejăm datele tale personale, în conformitate cu Regulamentul (UE) 2016/679 (GDPR).</p>
+
+      <h2 class="font-display text-2xl font-bold">2. Ce date colectăm</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Date de identificare: nume, prenume</li>
+        <li>Date de contact: telefon, email, adresă</li>
+        <li>Detalii despre serviciul solicitat</li>
+        <li>Date tehnice (cookie-uri, IP) — pentru funcționarea site-ului</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">3. Scopul prelucrării</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Răspuns la cererile de ofertă</li>
+        <li>Programarea și executarea serviciilor</li>
+        <li>Facturare și obligații legale</li>
+        <li>Comunicare directă privind serviciile</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">4. Temeiul legal</h2>
+      <p>Prelucrăm datele pe baza consimțământului tău, executării contractului și obligațiilor legale.</p>
+
+      <h2 class="font-display text-2xl font-bold">5. Cui transmitem datele</h2>
+      <p>Nu vindem și nu transferăm datele tale către terți pentru marketing.</p>
+
+      <h2 class="font-display text-2xl font-bold">6. Cât timp păstrăm datele</h2>
+      <p>Atât cât este necesar pentru prestarea serviciilor și conform obligațiilor legale (de regulă 5 ani).</p>
+
+      <h2 class="font-display text-2xl font-bold">7. Drepturile tale</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Acces, rectificare sau ștergere</li>
+        <li>Restricționarea prelucrării</li>
+        <li>Portabilitatea datelor</li>
+        <li>Opoziție și retragerea consimțământului</li>
+        <li>Plângere la ANSPDCP</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">8. Cookie-uri și servicii terțe</h2>
+      <p>Acest site nu folosește cookie-uri de publicitate sau de analiză a traficului (ex. Google Analytics). Formularul de contact transmite datele către <strong class="text-foreground">Formspree</strong>, un procesator care ne ajută să primim mesajele; prelucrarea respectă politica Formspree și scopurile descrise mai sus.</p>
+      <p>Browserul tău poate stoca cookie-uri strict necesare pentru funcționarea sesiunii sau a formularului, în limitele tehnice obișnuite. Poți gestiona cookie-urile din setările browserului.</p>
+
+      <h2 class="font-display text-2xl font-bold">9. Contact</h2>
+      <p>Scrie-ne la <a href="mailto:contact@gngpurecare.ro" class="text-primary underline">contact@gngpurecare.ro</a> sau sună la <a href="tel:+40747821384" class="text-primary underline">0747 821 384</a>.</p>
+    </div>
+  </section>
+</Layout>

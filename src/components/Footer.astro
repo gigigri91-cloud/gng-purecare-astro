@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+import { hasSocialLinks, socialLinks } from '../data/social';
+
+const year = new Date().getFullYear();
+const showSocial = hasSocialLinks();
+---
+<footer class="border-t border-border bg-surface">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-4 md:px-6">
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-2.5">
+        <svg viewBox="0 0 32 32" class="h-8 w-8" aria-hidden="true">
+          <path d="M16 3c4.5 5 9 10 9 15.5a9 9 0 1 1-18 0C7 13 11.5 8 16 3Z" fill="#008080"/>
+        </svg>
+        <span class="font-display text-lg font-bold">GNG <span class="text-primary">PureCare</span></span>
+      </div>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+        Servicii profesionale de curățenie pentru apartamente, birouri și spații după renovare. Lucrăm în București și zonele limitrofe.
+      </p>
+      {showSocial && (
+        <div class="mt-5 flex flex-wrap gap-2">
+          {socialLinks.facebook.trim() && (
+            <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground hover:border-primary hover:text-primary">
+              <Icon name="facebook" class="h-4 w-4" />
+            </a>
+          )}
+          {socialLinks.instagram.trim() && (
+            <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground hover:border-primary hover:text-primary">
+              <Icon name="instagram" class="h-4 w-4" />
+            </a>
+          )}
+          {socialLinks.linkedin.trim() && (
+            <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground hover:border-primary hover:text-primary">
+              <Icon name="linkedin" class="h-4 w-4" />
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+    <div>
+      <h3 class="mb-4 text-sm font-semibold">Navigare</h3>
+      <ul class="space-y-2 text-sm text-muted-foreground">
+        <li><a href="/" class="hover:text-primary">Acasă</a></li>
+        <li><a href="/servicii" class="hover:text-primary">Servicii</a></li>
+        <li><a href="/despre" class="hover:text-primary">Despre noi</a></li>
+        <li><a href="/contact" class="hover:text-primary">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="mb-4 text-sm font-semibold">Contact</h3>
+      <ul class="space-y-3 text-sm text-muted-foreground">
+        <li class="flex items-start gap-2"><Icon name="phone" class="mt-0.5 h-4 w-4 text-primary"/><a href="tel:+40747821384" class="hover:text-primary">0747 821 384</a></li>
+        <li class="flex items-start gap-2"><Icon name="mail" class="mt-0.5 h-4 w-4 text-primary"/><a href="mailto:contact@gngpurecare.ro" class="hover:text-primary">contact@gngpurecare.ro</a></li>
+        <li class="flex items-start gap-2"><Icon name="pin" class="mt-0.5 h-4 w-4 text-primary"/><span>București, România</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-border">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-muted-foreground md:flex-row md:px-6">
+      <p>© {year} GNG PureCare. Toate drepturile rezervate.</p>
+      <div class="flex items-center gap-4">
+        <a href="/confidentialitate" class="hover:text-primary">Politică de confidențialitate</a>
+        <span>•</span>
+        <p>Curățenie fără griji • București</p>
+      </div>
+    </div>
+  </div>
+</footer>

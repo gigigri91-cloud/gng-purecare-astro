@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import ContactForm from '../components/ContactForm.astro';
+
+const SERVICES = [
+  {
+    id:'apartamente', icon:'sparkles', img:'/images/service-apartment.jpg',
+    h2:'Servicii curățenie apartamente București',
+    intro:'Curățenie generală sau aprofundată pentru locuințe, executată de o echipă antrenată să acorde atenție fiecărui detaliu. Lucrăm la apartamente, garsoniere, case și duplexuri din București și împrejurimi.',
+    includes:['Aspirare și mopuit toate camerele și holurile','Bucătărie completă: blat, dulapuri, aragaz, hotă, chiuvetă','Băi dezinfectate: faianță, gresie, cabină duș, oglinzi','Ștergere praf pe toate suprafețele și obiectele decorative','Curățare ferestre interior și ramă'],
+    benefits:['Locuință proaspătă și igienizată în câteva ore','Produse sigure pentru copii și animale','Timp recâștigat pentru tine și familia ta'],
+    duration:'3–6 ore (în funcție de suprafață)', durationIcon:'clock', extraLabel:'Durată estimată', cta:'Solicită ofertă pentru apartament'
+  },
+  {
+    id:'birouri', icon:'building', img:'/images/service-office.jpg',
+    h2:'Curățenie profesională birouri și spații comerciale',
+    intro:'Spații de lucru curate, ordonate și profesionale, cu programe adaptate orarului firmei tale. Discreție totală, personal verificat și rezultate constante de la o vizită la alta.',
+    includes:['Aspirare mochete și mopuit pardoseli','Curățare birouri, mese de ședință și echipamente IT','Igienizare grupuri sanitare și kitchenette','Reumplere consumabile (hârtie, săpun, prosoape)','Golire coșuri de gunoi și colectare selectivă','Spălare ferestre și suprafețe sticlă (programat)'],
+    benefits:['Imagine profesională pentru clienți și echipă','Reducerea îmbolnăvirilor sezoniere','Contracte flexibile, factură fiscală pentru firme'],
+    duration:'Zilnic, de 2–3 ori/săptămână, săptămânal sau lunar', durationIcon:'calendar', extraLabel:'Frecvență recomandată', cta:'Solicită ofertă pentru birou'
+  },
+  {
+    id:'renovare', icon:'hardhat', img:'/images/service-renovation.jpg',
+    h2:'Curățenie după renovare București — rezultate garantate',
+    intro:'Eliminăm praful fin de construcție, urmele de vopsea, var, mortar și adezivi. Pregătim rapid proprietatea pentru locuire, vânzare sau închiriere — totul gata de mutare.',
+    includes:['Eliminarea prafului fin de pe toate suprafețele','Curățarea urmelor de vopsea, var și adezivi','Spălarea ferestrelor și a tâmplăriei (interior + exterior accesibil)','Polișarea gresiei, parchetului și a pardoselilor','Igienizarea completă a băilor și bucătăriei','Curățare instalații sanitare și electrice de praf'],
+    benefits:['Locuință gata de mutare în 24–48h','Eliminare 100% a prafului fin (PM10)','Disponibilitate rapidă, inclusiv intervenții urgente'],
+    duration:'1–2 zile pentru un apartament de 60–90 mp', durationIcon:'clock', extraLabel:'Timeline tipic', cta:'Solicită ofertă urgentă'
+  },
+];
+
+const PACKAGES = [
+  { name:'Basic', price:'de la 250 lei', desc:'Curățenie de întreținere pentru locuințe sau birouri mici.', items:['Aspirare și mopuit','Praf pe suprafețe vizibile','Igienizare băi și bucătărie','Golire coșuri de gunoi'], highlight:false },
+  { name:'Standard', price:'de la 400 lei', desc:'Curățenie completă, recomandată lunar pentru rezultate optime.', items:['Tot din pachetul Basic','Curățare interior dulapuri (la cerere)','Spălare oglinzi și sticlă','Detașare praf pe obiecte decorative'], highlight:true },
+  { name:'Premium', price:'de la 650 lei', desc:'Curățenie aprofundată sau după renovare, cu garanție de satisfacție.', items:['Tot din pachetul Standard','Spălare ferestre interior + exterior','Curățare interior frigider și cuptor','Polișare pardoseli','Tratamente anti-calcar băi','Revenire gratuită în 24h'], highlight:false },
+];
+
+const FAQ = [
+  { q:'Aduceți voi produsele și echipamentele de curățenie?', a:'Da, venim complet echipați cu produse profesionale ecologice, aspiratoare și mop-uri profesionale. Tu nu trebuie să te ocupi de nimic.' },
+  { q:'Care este diferența între pachetele Basic, Standard și Premium?', a:'Basic acoperă întreținerea de bază, Standard adaugă lucrări detaliate, iar Premium include curățarea aprofundată cu spălare ferestre, interior frigider, polișare pardoseli și revenire gratuită.' },
+  { q:'Pot să nu fiu acasă în timpul intervenției?', a:'Sigur. Mulți clienți ne lasă cheile sau folosim accesul cu cod. Echipa noastră este verificată, asigurată și are referințe verificabile.' },
+  { q:'Cât de repede puteți interveni după renovare?', a:'Pentru intervenții după renovare programăm de obicei în 24–72h de la cererea de ofertă, în funcție de suprafață și complexitate.' },
+  { q:'Cum se calculează prețul pentru un birou?', a:'Pentru birouri lucrăm cu ofertă personalizată în funcție de suprafață, frecvență și tipul activităților. Trimitem oferta în 24–48 de ore de la solicitare.' },
+  { q:'Ce înseamnă garanția de satisfacție?', a:'Dacă în 24 de ore observi ceva ce nu e cum trebuie, revenim gratuit și remediam, fără discuții și fără costuri suplimentare.' },
+];
+---
+<Layout
+  title="Servicii Curățenie București | GNG PureCare"
+  description="Servicii de curățenie profesională în București: apartamente, birouri și după renovare. Pachete transparente Basic, Standard și Premium. Ofertă în 24–48h.">
+
+  <section class="bg-surface py-14 md:py-20">
+    <div class="mx-auto max-w-6xl px-4 md:px-6">
+      <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-sm text-muted-foreground">
+        <a href="/" class="inline-flex items-center gap-1 hover:text-primary"><Icon name="home" class="h-3.5 w-3.5"/> Acasă</a>
+        <Icon name="chevron" class="h-3.5 w-3.5"/>
+        <span class="font-medium text-foreground">Servicii</span>
+      </nav>
+      <h1 class="mt-5 max-w-3xl font-display text-4xl font-bold tracking-tight md:text-5xl">Servicii de curățenie profesională în București</h1>
+      <p class="mt-4 max-w-2xl text-lg text-muted-foreground">De la apartamentul tău la birou și până la spații proaspăt renovate — lucrăm cu aceeași atenție la detalii și aceleași standarde înalte.</p>
+    </div>
+  </section>
+
+  <section class="bg-background">
+    <div class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+      <div class="space-y-24">
+        {SERVICES.map((s, i) => (
+          <article id={s.id} class={`grid gap-10 md:grid-cols-2 md:items-center scroll-mt-20 ${i%2===1 ? 'md:[&>div:first-child]:order-2' : ''}`}>
+            <div>
+              <img src={s.img} alt={s.h2} loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-[var(--shadow-card)]"/>
+            </div>
+            <div>
+              <Icon name={s.icon} class="h-7 w-7 text-primary"/>
+              <h2 class="mt-3 font-display text-2xl font-bold md:text-3xl">{s.h2}</h2>
+              <p class="mt-3 text-muted-foreground">{s.intro}</p>
+              <h3 class="mt-6 text-sm font-semibold uppercase tracking-wider text-foreground/70">Ce include</h3>
+              <ul class="mt-3 space-y-2.5">
+                {s.includes.map(x => (
+                  <li class="flex items-start gap-2 text-sm"><Icon name="check" class="mt-0.5 h-5 w-5 flex-shrink-0 text-primary"/><span>{x}</span></li>
+                ))}
+              </ul>
+              <h3 class="mt-6 text-sm font-semibold uppercase tracking-wider text-foreground/70">Beneficii</h3>
+              <ul class="mt-3 space-y-2.5">
+                {s.benefits.map(x => (
+                  <li class="flex items-start gap-2 text-sm"><Icon name="star" class="mt-0.5 h-4 w-4 flex-shrink-0 fill-amber-500 text-amber-500"/><span>{x}</span></li>
+                ))}
+              </ul>
+              <div class="mt-6 flex items-start gap-3 rounded-2xl bg-surface p-4">
+                <Icon name={s.durationIcon} class="mt-0.5 h-5 w-5 flex-shrink-0 text-primary"/>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{s.extraLabel}</p>
+                  <p class="mt-0.5 font-medium">{s.duration}</p>
+                </div>
+              </div>
+              <a href="/#oferta" class="mt-6 inline-flex h-11 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground hover:bg-primary-hover">
+                {s.cta} <Icon name="arrow" class="ml-1 h-4 w-4"/>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="preturi" class="bg-surface py-20">
+    <div class="mx-auto max-w-6xl px-4 md:px-6">
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Pachete și prețuri orientative</h2>
+      <p class="mt-3 max-w-2xl text-muted-foreground">Prețurile variază în funcție de suprafață și starea spațiului. Trimitem oferta finală în 24–48 de ore.</p>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {PACKAGES.map(p => (
+          <article class={`flex flex-col rounded-3xl bg-card p-7 shadow-[var(--shadow-soft)] ${p.highlight ? 'ring-2 ring-primary' : ''}`}>
+            {p.highlight && (
+              <span class="mb-3 inline-flex w-fit items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary-foreground">
+                <Icon name="star" class="h-3 w-3 fill-current"/> Recomandat
+              </span>
+            )}
+            <h3 class="font-display text-2xl font-bold">{p.name}</h3>
+            <p class="mt-2 text-sm text-muted-foreground">{p.desc}</p>
+            <p class="mt-4 font-display text-3xl font-bold text-primary">{p.price}</p>
+            <ul class="mt-5 flex-1 space-y-2.5">
+              {p.items.map(x => (
+                <li class="flex items-start gap-2 text-sm"><Icon name="check" class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary"/><span>{x}</span></li>
+              ))}
+            </ul>
+            <a href="/#oferta" class={`mt-6 inline-flex h-11 items-center justify-center rounded-full font-semibold ${p.highlight ? 'bg-primary text-primary-foreground hover:bg-primary-hover' : 'bg-foreground text-background hover:bg-foreground/90'}`}>
+              Cere ofertă {p.name}
+            </a>
+          </article>
+        ))}
+      </div>
+      <p class="mt-6 text-center text-xs text-muted-foreground">* Prețurile sunt orientative pentru un apartament de 2 camere.</p>
+    </div>
+  </section>
+
+  <section class="bg-surface py-20">
+    <div class="mx-auto max-w-3xl px-4 md:px-6">
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Întrebări frecvente despre servicii</h2>
+      <div class="mt-10 divide-y divide-border rounded-2xl border border-border bg-card">
+        {FAQ.map(f => (
+          <details class="p-5">
+            <summary class="flex items-center justify-between gap-4 font-semibold">
+              <span>{f.q}</span>
+              <Icon name="chevdown" class="chev h-5 w-5 text-muted-foreground"/>
+            </summary>
+            <p class="mt-3 text-muted-foreground">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="oferta" class="bg-background py-20 scroll-mt-20">
+    <div class="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-2 md:px-6">
+      <div>
+        <h2 class="font-display text-3xl font-bold md:text-4xl">Solicită o ofertă pentru spațiul tău</h2>
+        <p class="mt-3 max-w-md text-muted-foreground">Spune-ne ce ai nevoie și primești o ofertă personalizată în 24–48 de ore.</p>
+      </div>
+      <div class="rounded-3xl bg-card p-6 shadow-[var(--shadow-card)] md:p-8">
+        <ContactForm instanceId="servicii"/>
+      </div>
+    </div>
+  </section>
+</Layout>
