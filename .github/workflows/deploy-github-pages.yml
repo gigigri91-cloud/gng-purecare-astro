@@ -1,16 +1,19 @@
 # Build Astro static site și publică pe GitHub Pages (FĂRĂ Jekyll).
 #
-# Dacă în Actions vezi „jekyll v3.10” / „jekyll-build-pages”:
-# → GitHub încă folosește sursa „Deploy from a branch”, care pornește workflow-ul
-#   automat „pages-build-deployment” (Jekyll). Astro NU poate fi construit așa.
+# IMPORTANT — Două workflow-uri pe push:
+# - „Deploy GitHub Pages” (acesta) = build Astro + deploy → SITE-UL LIVE (verde).
+# - „pages build and deployment” = workflow GitHub cu Jekyll pe tot repo-ul → eșuează
+#   pe proiecte Astro; NU îl poți dezactiva din CLI. Logurile cu „jekyll v3.10” sunt de acolo.
+# Ignoră eșecul Jekyll sau filtrează în Actions după „Deploy GitHub Pages”.
+# Verificare API: build_type trebuie să fie „workflow”.
 #
-# Remediere (o singură dată):
+# Dacă în Actions vezi doar Jekyll și nu vezi acest workflow:
+# → Settings → Pages → Source = „GitHub Actions”.
+#
+# Remediere sursă Pages (dacă e nevoie):
 # 1. Repo → Settings → Pages
-# 2. „Build and deployment” → „Source”: alege „GitHub Actions” (nu „Deploy from a branch”).
-# 3. Actions → deschide „pages-build-deployment” (dacă mai apare) → poți ignora sau
-#    lasă-l nefolosit; site-ul trebuie livrat de workflow-ul „Deploy GitHub Pages” de mai jos.
+# 2. „Build and deployment” → „Source”: „GitHub Actions”.
 #
-# Acțiuni pe Node 24 (deprecare Node 20 pe runneri GitHub).
 name: Deploy GitHub Pages
 
 on:
