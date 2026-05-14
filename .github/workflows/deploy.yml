@@ -1,38 +1,27 @@
-# Deploy automat către Cloudflare Pages (Wrangler).
-# Dacă în Cloudflare ai deja „Connect to Git” pe același repo, poți avea dublu build —
-# dezactivează fie integrarea Git din Cloudflare, fie acest workflow.
-#
-# Secrets în GitHub → Settings → Secrets → Actions:
-#   CLOUDFLARE_API_TOKEN   (obligatoriu)
-#   CLOUDFLARE_ACCOUNT_ID  (obligatoriu pentru `pages deploy`)
-#
-# Schimbă --project-name dacă proiectul tău Pages din Cloudflare are alt nume.
 name: Deploy to Cloudflare Workers
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: npm
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+        working-directory: astro-site
       - name: Build
         run: npm run build
+        working-directory: astro-site
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=gng-purecare-astro
+          workingDirectory: astro-site
+          command: deploy
