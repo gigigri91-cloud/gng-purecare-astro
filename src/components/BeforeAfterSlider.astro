@@ -8,91 +8,55 @@ export interface Props {
 const { before, after, altBefore = "Înainte de curățenie", altAfter = "După curățenie" } = Astro.props;
 ---
 
-<div class="before-after-slider" id="baSlider" data-ba-slider>
-  <div class="ba-after">
-    <img src={after} alt={altAfter} draggable="false" loading="eager" decoding="async" />
+<div
+  class="before-after-slider relative w-full cursor-col-resize overflow-hidden rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] select-none touch-none"
+  id="baSlider"
+  data-ba-slider
+>
+  <div class="relative aspect-video w-full">
+    <div
+      class="absolute inset-0 z-[1] bg-cover bg-center"
+      style={`background-image: url('${after}')`}
+      role="img"
+      aria-label={altAfter}
+    ></div>
     <span class="ba-label ba-label-after">După</span>
-  </div>
-  <div class="ba-before" id="baBefore">
-    <div class="ba-before-inner">
-      <img src={before} alt={altBefore} draggable="false" loading="eager" decoding="async" />
+
+    <div class="absolute inset-y-0 left-0 z-[2] w-1/2 overflow-hidden" id="baBefore">
+      <div
+        class="ba-before-inner absolute inset-y-0 left-0 bg-cover bg-center"
+        style={`background-image: url('${before}')`}
+        role="img"
+        aria-label={altBefore}
+      ></div>
+      <span class="ba-label ba-label-before">Înainte</span>
     </div>
-    <span class="ba-label ba-label-before">Înainte</span>
-  </div>
-  <div class="ba-handle" id="baHandle" aria-hidden="true">
-    <div class="ba-line"></div>
-    <div class="ba-handle-circle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20" aria-hidden="true">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20" aria-hidden="true">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
+
+    <div
+      class="ba-handle pointer-events-none absolute inset-y-0 left-1/2 z-10 -translate-x-1/2"
+      id="baHandle"
+      aria-hidden="true"
+    >
+      <div class="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-white"></div>
+      <div
+        class="absolute top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-primary shadow-[0_2px_12px_rgba(0,0,0,0.2)]"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-  .before-after-slider {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 1.5rem;
-    cursor: col-resize;
-    user-select: none;
-    touch-action: none;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    --ba-split: 50%;
-    --ba-full-width: 100%;
-  }
-
-  .ba-after {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  .ba-after img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    pointer-events: none;
-  }
-
-  .ba-before {
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: var(--ba-split);
-    z-index: 2;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .ba-before-inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: var(--ba-full-width);
-  }
-
-  .ba-before-inner img {
-    display: block;
-    width: var(--ba-full-width);
-    height: 100%;
-    max-width: none;
-    object-fit: cover;
-    object-position: center;
-    pointer-events: none;
-  }
-
   .ba-label {
     position: absolute;
     bottom: 16px;
-    z-index: 4;
+    z-index: 5;
     padding: 4px 14px;
     border-radius: 999px;
     font-size: 0.75rem;
@@ -102,87 +66,43 @@ const { before, after, altBefore = "Înainte de curățenie", altAfter = "După 
     color: white;
     background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(4px);
+    pointer-events: none;
   }
-
   .ba-label-before {
     left: 16px;
   }
-
   .ba-label-after {
     right: 16px;
-  }
-
-  .ba-handle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: var(--ba-split);
-    z-index: 3;
-    width: 0;
-    transform: translateX(-50%);
-    pointer-events: none;
-  }
-
-  .ba-line {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 3px;
-    transform: translateX(-50%);
-    background: white;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-  }
-
-  .ba-handle-circle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: white;
-    color: #008080;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ba-handle-circle {
-      transition: none;
-    }
   }
 </style>
 
 <script>
   const slider = document.querySelector<HTMLElement>('[data-ba-slider]');
+  const frame = slider?.querySelector<HTMLElement>('.aspect-video');
   const before = document.getElementById('baBefore');
   const handle = document.getElementById('baHandle');
+  const beforeInner = before?.querySelector<HTMLElement>('.ba-before-inner');
   let dragging = false;
 
-  function syncSliderWidth() {
-    if (!slider) return;
-    slider.style.setProperty('--ba-full-width', `${slider.offsetWidth}px`);
+  function syncBeforeWidth() {
+    const width = frame?.offsetWidth ?? slider?.offsetWidth;
+    if (!width || !beforeInner) return;
+    beforeInner.style.width = `${width}px`;
   }
 
   function setPos(clientX: number) {
-    if (!slider) return;
+    if (!slider || !before || !handle) return;
     const rect = slider.getBoundingClientRect();
     let pct = (clientX - rect.left) / rect.width;
     pct = Math.min(Math.max(pct, 0.05), 0.95);
     const pctStr = `${(pct * 100).toFixed(2)}%`;
-    slider.style.setProperty('--ba-split', pctStr);
+    before.style.width = pctStr;
+    handle.style.left = pctStr;
   }
 
   if (slider && before && handle) {
-    syncSliderWidth();
-    window.addEventListener('resize', syncSliderWidth);
-    slider.querySelectorAll('img').forEach((img) => {
-      img.addEventListener('load', syncSliderWidth);
-    });
+    syncBeforeWidth();
+    window.addEventListener('resize', syncBeforeWidth);
 
     slider.addEventListener('mousedown', (e) => {
       dragging = true;
