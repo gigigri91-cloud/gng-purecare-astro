@@ -56,9 +56,12 @@ const { before, after, altBefore = "Înainte de curățenie", altAfter = "După 
     overflow: hidden;
   }
   .ba-before img {
-    width: auto;
-    min-width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
     max-width: none;
+    object-fit: cover;
   }
   .ba-label {
     position: absolute;
@@ -117,7 +120,13 @@ const { before, after, altBefore = "Înainte de curățenie", altAfter = "După 
   const slider = document.getElementById('baSlider');
   const before = document.getElementById('baBefore');
   const handle = document.getElementById('baHandle');
+  const beforeImg = before?.querySelector('img') as HTMLImageElement | null;
   let dragging = false;
+
+  function syncBeforeImgWidth() {
+    if (!slider || !beforeImg) return;
+    beforeImg.style.width = `${slider.offsetWidth}px`;
+  }
 
   function setPos(x: number) {
     const rect = slider!.getBoundingClientRect();
@@ -127,6 +136,10 @@ const { before, after, altBefore = "Înainte de curățenie", altAfter = "După 
     before!.style.width = pctStr;
     handle!.style.left = pctStr;
   }
+
+  syncBeforeImgWidth();
+  window.addEventListener('resize', syncBeforeImgWidth);
+  beforeImg?.addEventListener('load', syncBeforeImgWidth);
 
   slider!.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); });
   slider!.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
