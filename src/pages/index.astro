@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import ContactForm from '../components/ContactForm.astro';
+import BeforeAfterSlider from '../components/BeforeAfterSlider.astro';
 
 const TRUST = ['Echipă profesionistă','Produse sigure și ecologice','Program flexibil','Transparență totală'];
 
@@ -144,15 +145,11 @@ const faqSchema = {
     <div class="mx-auto max-w-4xl px-4 md:px-6">
       <h2 class="font-display text-3xl font-bold md:text-4xl">Rezultate care se văd</h2>
       <p class="mt-3 max-w-2xl text-muted-foreground">Aceeași încăpere, înainte și după o intervenție GNG PureCare.</p>
-      <div class="mt-12 grid gap-6 sm:grid-cols-2">
-        <figure class="relative overflow-hidden rounded-3xl shadow-[var(--shadow-card)]">
-          <img src="/images/before-cleaning.jpg" alt="Cameră înainte de curățare" loading="lazy" class="aspect-[4/3] w-full object-cover"/>
-          <figcaption class="absolute left-4 top-4 rounded-full bg-foreground/85 px-3 py-1 text-xs font-bold tracking-wider text-white">ÎNAINTE</figcaption>
-        </figure>
-        <figure class="relative overflow-hidden rounded-3xl shadow-[var(--shadow-card)]">
-          <img src="/images/after-cleaning.jpg" alt="Aceeași cameră după curățare profesională" loading="lazy" class="aspect-[4/3] w-full object-cover"/>
-          <figcaption class="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-bold tracking-wider text-primary-foreground">DUPĂ</figcaption>
-        </figure>
+      <div class="mt-12">
+        <BeforeAfterSlider
+          before="/images/before-cleaning.jpg"
+          after="/images/after-cleaning.jpg"
+        />
       </div>
     </div>
   </section>
