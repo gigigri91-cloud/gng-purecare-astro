@@ -8,12 +8,24 @@ const showSocial = hasSocialLinks();
 <footer class="border-t border-border bg-surface">
   <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-4 md:px-6">
     <div class="md:col-span-2">
-      <div class="flex items-center gap-2.5">
-        <svg viewBox="0 0 32 32" class="h-8 w-8" aria-hidden="true">
-          <path d="M16 3c4.5 5 9 10 9 15.5a9 9 0 1 1-18 0C7 13 11.5 8 16 3Z" fill="#008080"/>
-        </svg>
-        <span class="font-display text-lg font-bold">GNG <span class="text-primary">PureCare</span></span>
-      </div>
+      <a href="/" class="footer__logo" aria-label="GNG PureCare - Acasă">
+        <img
+          class="footer__logo-mark"
+          src="/images/logo-symbol.png"
+          alt=""
+          width="46"
+          height="46"
+          loading="lazy"
+          decoding="async"
+          aria-hidden="true"
+        />
+        <span class="footer__logo-wordmark">
+          <span class="footer__logo-gng">GNG</span>
+          <span class="footer__logo-brand">
+            Pure<span class="footer__logo-care">Care</span>
+          </span>
+        </span>
+      </a>
       <p class="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
         Servicii profesionale de curățenie pentru apartamente, birouri și spații după renovare. Lucrăm în București și zonele limitrofe.
       </p>
@@ -66,3 +78,49 @@ const showSocial = hasSocialLinks();
     </div>
   </div>
 </footer>
+
+<style>
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    text-decoration: none;
+  }
+
+  .footer__logo-mark {
+    display: block;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+  }
+
+  .footer__logo-wordmark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.05rem;
+    line-height: 1;
+  }
+
+  .footer__logo-gng {
+    font-family: var(--font-display);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #00695c;
+  }
+
+  .footer__logo-brand {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: #008080;
+  }
+
+  .footer__logo-care {
+    color: #2d9a8a;
+    font-weight: 600;
+  }
+</style>
