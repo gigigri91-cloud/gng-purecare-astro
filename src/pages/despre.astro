@@ -1,86 +1,148 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
+import { Image } from 'astro:assets';
+import josueHero from '../assets/images/josue-michel-MwxsRSG1A2s-unsplash.jpg';
+import feeyEco from '../assets/images/feey-ZnK3vfLzUg4-unsplash.jpg';
 
 const VALUES = [
-  { icon:'sparkles', t:'Curățenie', d:'Standarde înalte de igienă și atenție la detalii la fiecare vizită.' },
-  { icon:'heart', t:'Grijă', d:'Tratăm spațiul tău așa cum am trata casa noastră.' },
-  { icon:'shield', t:'Încredere', d:'Personal verificat, asigurat și transparent în toate interacțiunile.' },
-  { icon:'wallet', t:'Accesibilitate', d:'Pachete clare și prețuri corecte, adaptate bugetului tău.' },
-  { icon:'bulb', t:'Inovație', d:'Folosim produse moderne, ecologice și echipamente profesionale.' },
+  { icon: 'sparkles', title: 'Curățenie', desc: 'Standarde clare de igienă și finisare impecabilă la fiecare intervenție.' },
+  { icon: 'heart', title: 'Grijă', desc: 'Tratăm fiecare spațiu cu respect, atenție și discreție profesională.' },
+  { icon: 'shield', title: 'Încredere', desc: 'Echipă verificată, comunicare transparentă și promisiuni respectate.' },
+  { icon: 'wallet', title: 'Accesibilitate', desc: 'Oferte clare, fără surprize, adaptate nevoilor și bugetului tău.' },
+  { icon: 'bulb', title: 'Inovație', desc: 'Produse moderne, ecologice și echipamente profesionale de ultimă generație.' },
 ];
 
-const TEAM = [
-  { initials:'GN', name:'Gabriela N.', role:'Fondatoare & Coordonator operațional' },
-  { initials:'AM', name:'Andrei M.', role:'Team Lead — birouri & spații comerciale' },
-  { initials:'RP', name:'Raluca P.', role:'Specialist curățenie după renovare' },
+const REASONS = [
+  { icon: 'clock', title: 'Răspuns rapid', desc: 'Confirmăm solicitarea în 24–48 de ore, de obicei mult mai repede.' },
+  { icon: 'leaf', title: 'Produse sigure și ecologice', desc: 'Soluții fără chimicale agresive, sigure pentru copii și animale.' },
+  { icon: 'eye', title: 'Atenție la detalii', desc: 'Verificăm colțuri, suprafețe și zone uitate — revenim dacă e nevoie.' },
+  { icon: 'calendar', title: 'Flexibilitate', desc: 'Program adaptat pentru locuințe, birouri și intervenții speciale.' },
+  { icon: 'lock', title: 'Transparență', desc: 'Ofertă clară de la început, fără costuri ascunse.' },
 ];
 
-const STATS = [
-  { value:'200+', l:'clienți satisfăcuți' },
-  { value:'5 ani', l:'experiență' },
-  { value:'1500+', l:'spații curățate' },
-  { value:'4.9★', l:'rating mediu' },
+const STEPS = [
+  { n: '01', title: 'Evaluăm spațiul', desc: 'Înțelegem suprafața, starea și așteptările tale înainte de intervenție.' },
+  { n: '02', title: 'Intervenim organizat', desc: 'Lucrăm structurat, cu produse potrivite și echipă atentă la fiecare zonă.' },
+  { n: '03', title: 'Verificăm rezultatul', desc: 'Inspectăm împreună finisajul — garanția noastră de satisfacție rămâne activă.' },
+];
+
+const TRUST_STATS = [
+  { count: 500, suffix: '+', label: 'spații curățate' },
+  { count: 98, suffix: '%', label: 'clienți mulțumiți' },
+  { count: 24, suffix: 'h', label: 'răspuns la ofertă' },
+  { count: 3, suffix: '', label: 'tipuri principale de servicii' },
 ];
 ---
+
 <Layout
   title="Despre GNG PureCare — Curățenie București"
-  description="Povestea, valorile și echipa GNG PureCare. Servicii de curățenie profesională în București, construite pe încredere, transparență și atenție la detalii.">
-
-  <section class="bg-surface py-14 md:py-20">
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-      <nav class="flex items-center gap-1.5 text-sm text-muted-foreground">
-        <a href="/" class="inline-flex items-center gap-1 hover:text-primary"><Icon name="home" class="h-3.5 w-3.5"/> Acasă</a>
-        <Icon name="chevron" class="h-3.5 w-3.5"/>
-        <span class="font-medium text-foreground">Despre</span>
+  description="Descoperă povestea, valorile și modul de lucru GNG PureCare. Curățenie profesională în București, construită pe încredere, grijă și rezultate vizibile."
+>
+  <!-- 1. Hero -->
+  <section class="about-hero">
+    <div class="about-hero__inner mx-auto max-w-6xl px-4 md:px-6">
+      <nav class="about-breadcrumb" aria-label="Breadcrumb">
+        <a href="/"><Icon name="home" class="h-3.5 w-3.5" /> Acasă</a>
+        <Icon name="chevron" class="h-3.5 w-3.5" />
+        <span>Despre</span>
       </nav>
-      <h1 class="mt-5 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-5xl">Despre GNG PureCare — Partenerul tău de curățenie în București</h1>
-      <p class="mt-4 max-w-2xl text-lg text-muted-foreground">O echipă locală dedicată, construită pe încredere, atenție la detalii și pasiune pentru spații curate.</p>
-    </div>
-  </section>
-
-  <section class="bg-background py-20">
-    <div class="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-2 md:items-center md:px-6">
-      <img src="/images/about-team.jpg" alt="Echipa GNG PureCare" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-[var(--shadow-card)]"/>
-      <div>
-        <p class="text-sm font-semibold uppercase tracking-wider text-primary">Povestea noastră</p>
-        <h2 class="mt-2 font-display text-3xl font-bold md:text-4xl">Cum a pornit GNG PureCare</h2>
-        <div class="mt-5 space-y-4 text-muted-foreground">
-          <p>Am pornit la drum cu o idee simplă: curățenia profesională ar trebui să fie un serviciu de încredere, modern și prietenos.</p>
-          <p>Ne-am construit echipa selectând atent fiecare coleg, am ales produse ecologice sigure pentru familii și am creat procese clare.</p>
-          <p><strong class="text-foreground">Ce ne diferențiază:</strong> răspundem rapid, comunicăm transparent, lucrăm cu echipament profesional și garantăm rezultatul. Dacă ceva nu e curat, revenim gratuit.</p>
+      <div class="about-hero__grid">
+        <div class="about-hero__copy">
+          <p class="about-eyebrow">GNG PureCare · București</p>
+          <h1 class="about-hero__title">Despre GNG PureCare</h1>
+          <p class="about-hero__lead">
+            Promitem spații curate, sigure și îngrijite — cu o echipă care comunică clar, intervine la timp și stă în spatele fiecărui rezultat.
+          </p>
+          <a href="/#contact" class="about-btn about-btn--primary">
+            Solicită ofertă
+            <Icon name="arrow" class="h-4 w-4" />
+          </a>
+        </div>
+        <div class="about-hero__media">
+          <Image
+            src={josueHero}
+            alt="Profesionistă GNG PureCare pregătită pentru curățenia apartamentului tău din București"
+            width={800}
+            height={1067}
+            format="webp"
+            quality={82}
+            fetchpriority="high"
+            loading="eager"
+          />
         </div>
       </div>
     </div>
   </section>
 
-  <section class="bg-surface py-20">
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-      <h2 class="font-display text-3xl font-bold md:text-4xl">Valorile noastre</h2>
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-        {VALUES.map(v => (
-          <div class="rounded-2xl bg-card p-6 shadow-[var(--shadow-soft)]">
-            <Icon name={v.icon} class="h-7 w-7 text-primary"/>
-            <h3 class="mt-4 font-display text-lg font-semibold">{v.t}</h3>
-            <p class="mt-1 text-sm leading-relaxed text-muted-foreground">{v.d}</p>
+  <!-- 2. Povestea brandului -->
+  <section class="about-section about-section--white">
+    <div class="about-section__inner mx-auto max-w-6xl px-4 md:px-6">
+      <div class="about-story">
+        <div class="about-story__text">
+          <p class="about-eyebrow about-eyebrow--teal">Povestea noastră</p>
+          <h2 class="about-heading">Construiți pe încredere, nu pe promisiuni goale</h2>
+          <p class="about-body">
+            GNG PureCare a pornit dintr-o nevoie simplă: curățenia profesională trebuie să fie predictibilă, sigură și ușor de comandat.
+          </p>
+          <p class="about-body">
+            Am selectat o echipă atentă, am standardizat procesele și am ales produse ecologice care protejează familia, biroul și mediul.
+          </p>
+        </div>
+        <aside class="about-mission">
+          <p class="about-mission__label">Misiunea noastră</p>
+          <p class="about-mission__quote">
+            Să oferim curățenie de calitate înaltă, cu grijă autentică și transparență totală — de la prima ofertă până la ultimul colț curat.
+          </p>
+          <div class="about-mission__promise">
+            <Icon name="badge" class="h-5 w-5 text-primary" />
+            <span>Promisiune: dacă ceva nu e curat, revenim gratuit.</span>
           </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Valori -->
+  <section class="about-section about-section--gray">
+    <div class="about-section__inner mx-auto max-w-6xl px-4 md:px-6">
+      <div class="about-section__head">
+        <p class="about-eyebrow about-eyebrow--teal">Valorile noastre</p>
+        <h2 class="about-heading">Ce ne ghidează în fiecare intervenție</h2>
+      </div>
+      <div class="about-values">
+        {VALUES.map((v) => (
+          <article class="about-value-card">
+            <span class="about-value-card__icon">
+              <Icon name={v.icon} class="h-6 w-6" />
+            </span>
+            <h3>{v.title}</h3>
+            <p>{v.desc}</p>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="bg-background py-20">
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-      <h2 class="font-display text-3xl font-bold md:text-4xl">Echipa GNG PureCare</h2>
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        {TEAM.map(m => (
-          <article class="overflow-hidden rounded-3xl bg-surface text-center">
-            <div class="grid aspect-[4/3] place-items-center bg-primary-soft">
-              <span class="font-display text-5xl font-bold text-primary">{m.initials}</span>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display text-lg font-semibold">{m.name}</h3>
-              <p class="mt-1 text-sm text-muted-foreground">{m.role}</p>
+  <!-- 4. De ce ne aleg clienții -->
+  <section class="about-section about-section--white">
+    <div class="about-section__inner mx-auto max-w-6xl px-4 md:px-6">
+      <div class="about-section__head about-section__head--center">
+        <p class="about-eyebrow about-eyebrow--teal">De ce GNG PureCare</p>
+        <h2 class="about-heading">De ce ne aleg clienții</h2>
+        <p class="about-body about-body--center">
+          Parteneri de încredere pentru locuințe, birouri și spații după renovare — cu rezultate pe care le vezi și le simți.
+        </p>
+      </div>
+      <div class="about-reasons">
+        {REASONS.map((r) => (
+          <article class="about-reason">
+            <span class="about-reason__icon">
+              <Icon name={r.icon} class="h-5 w-5" />
+            </span>
+            <div>
+              <h3>{r.title}</h3>
+              <p>{r.desc}</p>
             </div>
           </article>
         ))}
@@ -88,24 +150,597 @@ const STATS = [
     </div>
   </section>
 
-  <section class="bg-surface py-16">
-    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 md:grid-cols-4 md:px-6">
-      {STATS.map(s => (
-        <div class="rounded-2xl bg-card p-6 text-center shadow-[var(--shadow-soft)]">
-          <p class="font-display text-3xl font-bold text-primary md:text-4xl">{s.value}</p>
-          <p class="mt-1 text-sm text-muted-foreground">{s.l}</p>
+  <!-- 5. Modul de lucru -->
+  <section class="about-section about-section--gray">
+    <div class="about-section__inner mx-auto max-w-6xl px-4 md:px-6">
+      <div class="about-process">
+        <div class="about-process__media">
+          <Image
+            src={feeyEco}
+            alt="Produse ecologice și echipamente profesionale pregătite de echipa GNG PureCare"
+            width={800}
+            height={600}
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
-      ))}
+        <div class="about-process__content">
+          <p class="about-eyebrow about-eyebrow--teal">Modul nostru de lucru</p>
+          <h2 class="about-heading">Organizați, atenți, verificați</h2>
+          <p class="about-body">
+            Fiecare intervenție urmează același flux clar — ca tu să știi exact la ce să te aștepți.
+          </p>
+          <ol class="about-steps">
+            {STEPS.map((s) => (
+              <li class="about-step">
+                <span class="about-step__n">{s.n}</span>
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="bg-primary py-16">
-    <div class="mx-auto flex max-w-3xl flex-col items-start px-4 text-primary-foreground md:px-6">
-      <h2 class="font-display text-3xl font-bold md:text-4xl">Lucrează cu noi</h2>
-      <p class="mt-3 max-w-xl opacity-90">Cere o ofertă personalizată și descoperă cum poate arăta spațiul tău.</p>
-      <a href="/#contact" class="mt-6 inline-flex h-12 items-center rounded-full bg-white px-7 font-semibold text-primary hover:bg-white/90">
-        Solicită ofertă <Icon name="arrow" class="ml-1 h-4 w-4"/>
+  <!-- 6. Statistici / trust -->
+  <section class="about-trust" id="about-statistici" aria-labelledby="about-stats-title">
+    <div class="about-trust__inner mx-auto max-w-6xl px-4 md:px-6">
+      <h2 id="about-stats-title" class="about-trust__title">GNG PureCare în cifre</h2>
+      <div class="about-trust__grid">
+        {TRUST_STATS.map((stat) => (
+          <div class="about-trust__item">
+            <p class="about-trust__value">
+              <span class="about-trust__count" data-count={stat.count}>0</span>
+              {stat.suffix && <span>{stat.suffix}</span>}
+            </p>
+            <p class="about-trust__label">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CTA final -->
+  <section class="about-cta">
+    <div class="about-cta__inner mx-auto max-w-3xl px-4 text-center md:px-6">
+      <h2 class="about-cta__title">Pregătit să lucrezi cu o echipă care îți respectă spațiul?</h2>
+      <p class="about-cta__text">
+        Spune-ne ce ai nevoie — îți răspundem rapid cu o ofertă clară și un plan de intervenție adaptat.
+      </p>
+      <a href="/#contact" class="about-btn about-btn--light">
+        Solicită ofertă gratuită
+        <Icon name="arrow" class="h-4 w-4" />
       </a>
     </div>
   </section>
 </Layout>
+
+<style>
+  .about-hero {
+    padding: 6rem 0 4rem;
+    background: linear-gradient(165deg, #f5fafa 0%, #ffffff 55%, #e6f2f2 100%);
+  }
+
+  .about-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    color: var(--color-muted-foreground);
+    margin-bottom: 2rem;
+  }
+
+  .about-breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .about-breadcrumb a:hover {
+    color: var(--color-primary);
+  }
+
+  .about-hero__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .about-hero__grid {
+      grid-template-columns: 1fr 1.05fr;
+      gap: 3rem;
+    }
+  }
+
+  .about-eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted-foreground);
+  }
+
+  .about-eyebrow--teal {
+    color: var(--color-primary);
+  }
+
+  .about-hero__title {
+    margin: 0.75rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--color-foreground);
+  }
+
+  .about-hero__lead {
+    margin: 1.25rem 0 0;
+    max-width: 32rem;
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: var(--color-muted-foreground);
+  }
+
+  .about-hero__media {
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .about-hero__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    .about-hero__media img {
+      min-height: 380px;
+    }
+  }
+
+  .about-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .about-btn--primary {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    box-shadow: 0 8px 24px rgba(0, 128, 128, 0.22);
+  }
+
+  .about-btn--primary:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+  }
+
+  .about-btn--light {
+    background: #ffffff;
+    color: var(--color-primary);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .about-btn--light:hover {
+    background: #f0fafa;
+    transform: translateY(-1px);
+  }
+
+  .about-section {
+    padding: clamp(3.5rem, 7vw, 5rem) 0;
+  }
+
+  .about-section--white {
+    background: var(--color-background);
+  }
+
+  .about-section--gray {
+    background: var(--color-surface);
+  }
+
+  .about-section__head {
+    margin-bottom: 2.5rem;
+    max-width: 36rem;
+  }
+
+  .about-section__head--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .about-heading {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .about-body {
+    margin: 1rem 0 0;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-muted-foreground);
+  }
+
+  .about-body--center {
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+
+  /* Story */
+  .about-story {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .about-story {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .about-mission {
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    background: linear-gradient(145deg, #ffffff 0%, #f0f9f9 100%);
+    border: 1px solid rgba(0, 128, 128, 0.12);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .about-mission__label {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .about-mission__quote {
+    margin: 1rem 0 0;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--color-foreground);
+  }
+
+  .about-mission__promise {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+  }
+
+  /* Values */
+  .about-values {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .about-values {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about-values {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .about-value-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .about-value-card__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+
+  .about-value-card h3 {
+    margin: 1rem 0 0;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .about-value-card p {
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-muted-foreground);
+  }
+
+  /* Reasons */
+  .about-reasons {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-reasons {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about-reasons {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .about-reason {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 1.35rem;
+    border-radius: 1rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .about-reason:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+  }
+
+  .about-reason__icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+
+  .about-reason h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .about-reason p {
+    margin: 0.35rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-muted-foreground);
+  }
+
+  /* Process */
+  .about-process {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .about-process {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .about-process__media {
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .about-process__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .about-steps {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .about-step__n {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    opacity: 0.85;
+  }
+
+  .about-step h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .about-step p {
+    margin: 0.35rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-muted-foreground);
+  }
+
+  /* Trust stats */
+  .about-trust {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: #008080;
+  }
+
+  .about-trust__title {
+    margin: 0 0 2.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .about-trust__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-trust__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .about-trust__item {
+    text-align: center;
+  }
+
+  .about-trust__value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3rem);
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+  }
+
+  .about-trust__label {
+    margin: 0.65rem 0 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  /* CTA */
+  .about-cta {
+    padding: clamp(3.5rem, 7vw, 5rem) 0;
+    background: linear-gradient(135deg, #006b6b 0%, #008080 50%, #009494 100%);
+  }
+
+  .about-cta__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+  }
+
+  .about-cta__text {
+    margin: 1rem auto 0;
+    max-width: 28rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .about-cta .about-btn {
+    margin-top: 1.75rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-btn,
+    .about-reason {
+      transition: none;
+    }
+
+    .about-reason:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  function initAboutStats() {
+    const section = document.getElementById('about-statistici');
+    const counters = section?.querySelectorAll<HTMLElement>('.about-trust__count');
+    if (!section || !counters?.length || section.dataset.init === 'true') return;
+    section.dataset.init = 'true';
+
+    const animateCount = (el: HTMLElement, target: number, duration = 1500) => {
+      const start = performance.now();
+      const update = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = String(Math.round(ease * target));
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    };
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      counters.forEach((el) => {
+        const t = Number(el.dataset.count);
+        if (!Number.isNaN(t)) el.textContent = String(t);
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          const t = Number(el.dataset.count);
+          if (!Number.isNaN(t)) animateCount(el, t);
+          observer.unobserve(el);
+        });
+      },
+      { threshold: 0.35 }
+    );
+    counters.forEach((el) => observer.observe(el));
+  }
+
+  initAboutStats();
+  document.addEventListener('astro:page-load', initAboutStats);
+</script>
