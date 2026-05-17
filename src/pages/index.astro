@@ -8,6 +8,7 @@ import Stats from '../components/Stats.astro';
 import ServiceCards from '../components/ServiceCards.astro';
 import Testimonials from '../components/Testimonials.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import { business } from '../data/business';
 
 const TRUST = ['Echipă profesionistă','Produse sigure și ecologice','Program flexibil','Transparență totală'];
 
@@ -26,32 +27,28 @@ const STEPS = [
 
 const FAQ = [
   { q:'Ce tipuri de spații curățați?', a:'Lucrăm la apartamente, case, birouri, spații comerciale și proprietăți după renovare în București și împrejurimi.' },
-  { q:'Lucrați și în weekend sau seara?', a:'Uneori, în funcție de disponibilitate.' },
+  { q:'Lucrați și în weekend sau seara?', a:'Da, lucrăm și în weekend și seara, în funcție de program. Contactează-ne și găsim împreună un interval potrivit.' },
   { q:'Ce include curățenia după renovare?', a:'Eliminarea prafului fin, urmelor de vopsea, var și mortar, spălarea ferestrelor, polișarea pardoselilor și igienizarea completă a băilor și bucătăriei.' },
   { q:'Folosiți produse sigure pentru copii și animale?', a:'Da. Folosim produse profesionale ecologice, fără substanțe agresive, sigure pentru toți membrii familiei.' },
   { q:'În cât timp răspundeți la o cerere de ofertă?', a:'Răspundem în 24–48 de ore, de obicei mult mai rapid.' },
   { q:'Oferiți contracte pentru servicii regulate?', a:'Da. Pentru birouri și clienți recurenți oferim contracte cu condiții preferențiale și program fix.' },
 ];
 
-const localBusiness = {
-  '@context':'https://schema.org','@type':'LocalBusiness',
-  name:'GNG PureCare',
-  description:'Servicii de curățenie profesională în București pentru apartamente, birouri și spații după renovare.',
-  url:'https://gngpurecare.ro', telephone:'+40747821384',
-  address:{'@type':'PostalAddress',addressLocality:'București',addressCountry:'RO'},
-  areaServed:'București', priceRange:'$$', openingHours:'Mo-Sa 08:00-20:00',
-};
 const faqSchema = {
-  '@context':'https://schema.org','@type':'FAQPage',
-  mainEntity: FAQ.map(f => ({'@type':'Question', name:f.q, acceptedAnswer:{'@type':'Answer', text:f.a}})),
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
 };
 ---
 <Layout
   title="Curățenie Profesională București | GNG PureCare"
-  description="Servicii de curățenie profesională în București pentru apartamente, birouri și spații după renovare. Echipă atentă, produse sigure, ofertă rapidă.">
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(localBusiness)}></script>
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
-
+  description="Servicii de curățenie profesională în București pentru apartamente, birouri și spații după renovare. Echipă atentă, produse sigure, ofertă rapidă."
+  schemaPage="home"
+>
   <Hero />
 
 
@@ -104,6 +101,11 @@ const faqSchema = {
           </div>
         ))}
       </div>
+      <p class="mt-10 text-center">
+        <a href={business.telephoneHref} class="phone-cta">
+          sau sună direct: {business.telephoneDisplay}
+        </a>
+      </p>
     </div>
   </section>
 
@@ -112,11 +114,11 @@ const faqSchema = {
     <div class="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-2 md:px-6">
       <div>
         <h2 class="font-display text-3xl font-bold md:text-4xl">Solicită o ofertă rapidă</h2>
-        <p class="mt-3 max-w-md text-muted-foreground">Completează formularul și primești o ofertă personalizată în 24–48 de ore. Fără obligații, fără costuri ascunse.</p>
+        <p class="mt-3 max-w-md text-muted-foreground">Completează formularul și primești o ofertă personalizată în 24–48 de ore.</p>
         <ul class="mt-6 space-y-3 text-sm">
           <li class="flex items-center gap-2"><Icon name="clock" class="h-5 w-5 text-primary"/> Răspuns în 24–48 de ore</li>
           <li class="flex items-center gap-2"><Icon name="shield" class="h-5 w-5 text-primary"/> Ofertă transparentă</li>
-          <li class="flex items-center gap-2"><Icon name="badge" class="h-5 w-5 text-primary"/> Programare flexibilă</li>
+          <li class="flex items-center gap-2"><Icon name="heart" class="h-5 w-5 text-primary"/> Garanție de satisfacție — revenim gratuit dacă e nevoie</li>
         </ul>
       </div>
       <div class="rounded-3xl bg-card p-6 shadow-[var(--shadow-card)] md:p-8">
@@ -129,4 +131,25 @@ const faqSchema = {
   </section>
 
   <FaqAccordion items={FAQ} title="Întrebări frecvente" idPrefix="faq" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </Layout>
+
+<style>
+  .phone-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .phone-cta:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
