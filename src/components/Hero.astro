@@ -1,0 +1,257 @@
+---
+import Icon from './Icon.astro';
+
+const TRUST_ITEMS = ['Răspuns rapid', 'Fără costuri ascunse', 'Rezultate garantate'];
+---
+
+<section class="hero" aria-label="Introducere">
+  <div
+    class="hero__media"
+    role="img"
+    aria-label="Interior modern curat — servicii de curățenie profesională GNG PureCare"
+  ></div>
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <span class="hero__badge hero-rise">
+        <Icon name="sparkles" class="h-3.5 w-3.5" />
+        București &amp; împrejurimi
+      </span>
+
+      <h1 class="hero__title hero-rise hero-rise-delay-1">
+        Curățenie profesională în București, fără griji.
+      </h1>
+
+      <p class="hero__subtitle hero-rise hero-rise-delay-1">
+        Servicii complete pentru apartamente, birouri și spații după renovare, cu echipă atentă, produse sigure și program flexibil.
+      </p>
+
+      <div class="hero__actions hero-rise hero-rise-delay-2">
+        <a href="#contact" class="hero__cta hero__cta--primary">
+          Solicită ofertă
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+        <a href="tel:+40747821384" class="hero__cta hero__cta--secondary">
+          <Icon name="phone" class="h-4 w-4" />
+          Sună acum
+        </a>
+      </div>
+
+      <p class="hero__trust hero-rise hero-rise-delay-2">
+        {TRUST_ITEMS.map((item) => (
+          <span class="hero__trust-item">
+            <span class="hero__check" aria-hidden="true">✓</span>
+            {item}
+          </span>
+        ))}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url('https://pplx-res.cloudinary.com/image/upload/pplx_search_images/060ed01be4a5cb32a76de22a995d9d77b6cd2cad.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.65) 40%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: 6rem 1rem 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero__inner {
+      padding: 7rem 1.5rem 5rem;
+    }
+  }
+
+  .hero__copy {
+    max-width: 36rem;
+  }
+
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+  }
+
+  .hero__title,
+  .hero__subtitle,
+  .hero__trust {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero__title {
+    margin-top: 1.25rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .hero__subtitle {
+    margin-top: 1.25rem;
+    max-width: 32rem;
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .hero__actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0 1.75rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      transform 200ms ease;
+  }
+
+  .hero__cta--primary {
+    background: #008080;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero__cta--primary:hover {
+    background: #005f5f;
+    transform: translateY(-1px);
+  }
+
+  .hero__cta:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  .hero__cta--secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+
+  .hero__cta--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .hero__trust {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    color: #ffffff;
+  }
+
+  .hero__trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .hero__check {
+    color: #6ee7b7;
+    font-weight: 700;
+  }
+
+  @media (max-width: 767px) {
+    .hero__overlay {
+      background: rgba(0, 0, 0, 0.72);
+    }
+
+    .hero__inner {
+      padding-top: 5.5rem;
+    }
+
+    .hero__copy {
+      max-width: none;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .hero__subtitle {
+      margin-inline: auto;
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero__cta {
+      width: 100%;
+    }
+
+    .hero__trust {
+      justify-content: center;
+      gap: 0.65rem 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__cta--primary:hover,
+    .hero__cta--secondary:hover {
+      transform: none;
+    }
+  }
+</style>

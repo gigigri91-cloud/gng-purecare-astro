@@ -1,0 +1,124 @@
+---
+const TESTIMONIALS = [
+  {
+    text: 'Am primit rapid oferta, echipa a ajuns la timp și apartamentul a arătat impecabil.',
+    name: 'Andreea M.',
+    city: 'București, Sector 1',
+    initial: 'A',
+  },
+  {
+    text: 'Seriozitate și flexibilitate. Comunicarea a fost excelentă.',
+    name: 'Mihai L.',
+    city: 'București',
+    initial: 'M',
+  },
+  {
+    text: 'Intervenție rapidă după renovare. Rezultatul s-a văzut de la intrare.',
+    name: 'Ioana P.',
+    city: 'București',
+    initial: 'I',
+  },
+];
+---
+
+<section class="testimonials-section bg-surface py-20">
+  <div class="testimonials-wrap mx-auto max-w-6xl px-4 md:px-6">
+    <h2 class="font-display text-3xl font-bold md:text-4xl">Clienți mulțumiți, spații impecabile</h2>
+
+    <div class="testimonials-grid mt-12">
+      {TESTIMONIALS.map((t) => (
+        <article class="testimonial-card">
+          <div class="stars" aria-label="Rating: 5 din 5 stele">
+            ★★★★★
+          </div>
+          <blockquote>„{t.text}"</blockquote>
+          <footer>
+            <div class="avatar" aria-hidden="true">{t.initial}</div>
+            <div class="author-info">
+              <strong>{t.name}</strong>
+              <span>{t.city}</span>
+            </div>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .stars {
+    color: #008080;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .testimonial-card blockquote {
+    margin: 1rem 0 0;
+    flex: 1;
+    font-size: 0.9375rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--color-foreground);
+  }
+
+  .testimonial-card footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .avatar {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #e0f2f1;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #00695c;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .author-info strong {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+  }
+
+  .author-info span {
+    font-size: 0.8125rem;
+    color: var(--color-muted-foreground);
+  }
+</style>

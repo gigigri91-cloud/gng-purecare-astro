@@ -1,0 +1,127 @@
+---
+const STATS = [
+  { count: 500, suffix: '+', label: 'spații curățate' },
+  { count: 98, suffix: '%', label: 'clienți mulțumiți' },
+  { count: 3, suffix: '', label: 'ani de experiență' },
+  { count: 24, suffix: 'h', label: 'răspuns la ofertă' },
+];
+---
+
+<section id="statistici" class="stats-section" aria-labelledby="statistici-title">
+  <div class="stats-wrap">
+    <h2 id="statistici-title" class="stats-title">GNG PureCare în cifre</h2>
+    <div class="stats-grid">
+      {STATS.map((stat) => (
+        <div class="stats-item">
+          <p class="stats-value">
+            <span class="stats-count" data-count={stat.count}>0</span>
+            {stat.suffix && <span class="stats-suffix">{stat.suffix}</span>}
+          </p>
+          <p class="stats-label">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-section {
+    background: #008080;
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .stats-wrap {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .stats-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 2.5rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .stats-item {
+    text-align: center;
+  }
+
+  .stats-value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+  }
+
+  .stats-suffix {
+    font-size: 0.85em;
+  }
+
+  .stats-label {
+    margin: 0.75rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.88);
+  }
+</style>
+
+<script>
+  function animateCount(el: HTMLElement, target: number, duration = 1500) {
+    const start = performance.now();
+    const update = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(ease * target));
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
+  const section = document.getElementById('statistici');
+  const counters = section?.querySelectorAll<HTMLElement>('[data-count]');
+
+  if (section && counters?.length) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reducedMotion) {
+      counters.forEach((el) => {
+        const target = Number(el.dataset.count);
+        if (!Number.isNaN(target)) el.textContent = String(target);
+      });
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            const el = entry.target as HTMLElement;
+            const target = Number(el.dataset.count);
+            if (!Number.isNaN(target)) animateCount(el, target);
+            observer.unobserve(el);
+          });
+        },
+        { threshold: 0.35 }
+      );
+
+      counters.forEach((el) => observer.observe(el));
+    }
+  }
+</script>

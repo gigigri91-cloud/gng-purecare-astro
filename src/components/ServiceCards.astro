@@ -1,0 +1,147 @@
+---
+const SERVICES = [
+  {
+    title: 'Curățenie rezidențială',
+    desc: 'Intervenții regulate sau aprofundate pentru apartamente și case, cu produse sigure și echipă atentă la detalii.',
+    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/57bfc8fb7f58f3247956c992ae5cbe1714468bea.jpg',
+    alt: 'Echipă de curățenie profesională în apartament rezidențial',
+  },
+  {
+    title: 'Curățenie birouri / spații comerciale',
+    desc: 'Spații de lucru curate și profesionale, cu program adaptat orarului firmei și rezultate constante.',
+    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/8443e3de713b2b8db22f561989b3b4b07f0ea316.jpg',
+    alt: 'Curățenie profesională birou modern',
+  },
+  {
+    title: 'Curățenie post-renovare / post-construcție',
+    desc: 'Eliminăm praf fin, urme de vopsea și moloz. Pregătim rapid proprietatea pentru locuire sau închiriere.',
+    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/dc4b4e223807115e03dacf8a9c607893e260cfe3.jpg',
+    alt: 'Curățenie după renovare, îndepărtare praf și moloz',
+  },
+  {
+    title: 'Curățenie după eveniment',
+    desc: 'Sală, living sau spațiu de primire — readucem ordinea după petreceri, evenimente private sau corporate.',
+    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/1038a2e7d509e9548f4412366b5c7a436d13271b.jpg',
+    alt: 'Curățenie sală după eveniment sau petrecere',
+  },
+];
+---
+
+<section class="services-section bg-background py-20">
+  <div class="services-wrap mx-auto max-w-6xl px-4 md:px-6">
+    <h2 class="font-display text-3xl font-bold md:text-4xl">Servicii pentru orice tip de spațiu</h2>
+    <p class="mt-3 max-w-2xl text-muted-foreground">
+      Alege serviciul potrivit pentru tine. Toate vin cu garanția GNG PureCare.
+    </p>
+
+    <div class="services-grid mt-12">
+      {SERVICES.map((s) => (
+        <article class="service-card card-hover">
+          <div class="card-image">
+            <img
+              src={s.img}
+              alt={s.alt}
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+          </div>
+          <div class="card-body">
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+            <a href="#contact" class="card-cta">Solicită ofertă →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .card-image {
+    overflow: hidden;
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+
+  .card-image img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    max-width: none;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover .card-image img {
+    transform: scale(1.05);
+  }
+
+  .card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .card-body h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-foreground);
+  }
+
+  .card-body p {
+    margin: 0.75rem 0 0;
+    flex: 1;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-muted-foreground);
+  }
+
+  .card-cta {
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .card-cta:hover {
+    color: var(--color-primary-hover);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-image img {
+      transition: none;
+    }
+
+    .service-card:hover .card-image img {
+      transform: none;
+    }
+  }
+</style>
