@@ -1,0 +1,181 @@
+---
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: FaqItem[];
+  title: string;
+  idPrefix?: string;
+  sectionClass?: string;
+}
+
+const { items, title, idPrefix = 'faq', sectionClass = 'bg-background' } = Astro.props;
+---
+
+<section class:list={['faq-section py-20', sectionClass]}>
+  <div class="faq-wrap mx-auto max-w-3xl px-4 md:px-6">
+    <h2 class="font-display text-3xl font-bold md:text-4xl">{title}</h2>
+
+    <div class="faq-list mt-10" data-faq-accordion>
+      {items.map((item, index) => {
+        const n = index + 1;
+        const answerId = `${idPrefix}-${n}-answer`;
+        const questionId = `${idPrefix}-${n}-question`;
+        return (
+          <div class="faq-item">
+            <button
+              type="button"
+              class="faq-question"
+              id={questionId}
+              aria-expanded="false"
+              aria-controls={answerId}
+            >
+              <span class="faq-question-text">{item.q}</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div
+              id={answerId}
+              class="faq-answer"
+              role="region"
+              aria-labelledby={questionId}
+              aria-hidden="true"
+            >
+              <div class="faq-answer-inner">
+                <p>{item.a}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-card);
+  }
+
+  .faq-item + .faq-item {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq-question {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.45;
+    text-align: left;
+    color: var(--color-foreground);
+    cursor: pointer;
+  }
+
+  .faq-question:focus-visible {
+    outline: 2px solid #008080;
+    outline-offset: -2px;
+    z-index: 1;
+    position: relative;
+  }
+
+  .faq-question-text {
+    flex: 1;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+  }
+
+  .faq-question[aria-expanded='true'] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .faq-item.is-open .faq-answer {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-answer-inner {
+    overflow: hidden;
+  }
+
+  .faq-answer-inner p {
+    margin: 0;
+    padding: 0 1.5rem 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-muted-foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-answer {
+      transition: none;
+    }
+
+    .faq-icon {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initFaqAccordion(root: HTMLElement) {
+    if (root.dataset.faqInit === 'true') return;
+    root.dataset.faqInit = 'true';
+
+    const items = Array.from(root.querySelectorAll<HTMLElement>('.faq-item'));
+
+    items.forEach((item) => {
+      const button = item.querySelector<HTMLButtonElement>('.faq-question');
+      if (!button) return;
+
+      button.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+
+        items.forEach((other) => {
+          other.classList.remove('is-open');
+          const otherBtn = other.querySelector<HTMLButtonElement>('.faq-question');
+          const otherPanel = other.querySelector<HTMLElement>('.faq-answer');
+          otherBtn?.setAttribute('aria-expanded', 'false');
+          otherPanel?.setAttribute('aria-hidden', 'true');
+        });
+
+        if (!isOpen) {
+          const panel = item.querySelector<HTMLElement>('.faq-answer');
+          item.classList.add('is-open');
+          button.setAttribute('aria-expanded', 'true');
+          panel?.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+  }
+
+  function initAllFaqAccordions() {
+    document.querySelectorAll<HTMLElement>('[data-faq-accordion]').forEach(initFaqAccordion);
+  }
+
+  initAllFaqAccordions();
+  document.addEventListener('astro:page-load', initAllFaqAccordions);
+</script>

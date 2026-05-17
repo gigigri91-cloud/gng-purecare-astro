@@ -2,27 +2,20 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import ContactForm from '../components/ContactForm.astro';
-import BeforeAfterSlider from '../components/BeforeAfterSlider.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
+import ServiceCards from '../components/ServiceCards.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
 
 const TRUST = ['Echipă profesionistă','Produse sigure și ecologice','Program flexibil','Transparență totală'];
-
-const SERVICES = [
-  { icon:'sparkles', title:'Curățenie Apartamente', desc:'Intervenții generale sau aprofundate, cu accent pe confort, igienă și timp câștigat pentru familia ta.', hash:'apartamente' },
-  { icon:'building', title:'Curățenie Birouri', desc:'Spații de lucru curate și profesionale, cu program adaptat și rezultate constante.', hash:'birouri' },
-  { icon:'hardhat', title:'Curățenie După Renovare', desc:'Pregătim rapid proprietatea pentru locuire, vânzare sau închiriere.', hash:'renovare' },
-];
 
 const REASONS = [
   { icon:'eye', title:'Atenție la detalii', desc:'Verificăm fiecare colț și revenim până când rezultatul e impecabil.' },
   { icon:'leaf', title:'Produse sigure pentru familie', desc:'Soluții ecologice, fără chimicale agresive, sigure pentru copii și animale.' },
   { icon:'lock', title:'Transparență totală', desc:'Ofertă clară de la început, fără costuri ascunse și fără surprize.' },
   { icon:'heart', title:'Garanție de satisfacție', desc:'Dacă ceva nu e curat, revenim gratuit.' },
-];
-
-const TESTIMONIALS = [
-  { text:'Am primit rapid oferta, echipa a ajuns la timp și apartamentul a arătat impecabil.', name:'Andreea', role:'Sector 1' },
-  { text:'Seriozitate și flexibilitate. Comunicarea a fost excelentă.', name:'Mihai', role:'Business Owner' },
-  { text:'Intervenție rapidă după renovare. Rezultatul s-a văzut de la intrare.', name:'Ioana', role:'București' },
 ];
 
 const STEPS = [
@@ -59,38 +52,8 @@ const faqSchema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(localBusiness)}></script>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 
-  <!-- HERO -->
-  <section class="bg-background">
-    <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:grid-cols-2 md:px-6 md:py-24">
-      <div>
-        <span class="inline-flex items-center gap-2 rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
-          <Icon name="sparkles" class="h-3.5 w-3.5"/> București & împrejurimi
-        </span>
-        <h1 class="hero-rise mt-5 font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
-          Curățenie profesională în București, <span class="text-primary">fără griji.</span>
-        </h1>
-        <p class="hero-rise hero-rise-delay-1 mt-5 max-w-lg text-lg leading-relaxed text-muted-foreground">
-          Servicii complete pentru apartamente, birouri și spații după renovare, cu echipă atentă, produse sigure și program flexibil.
-        </p>
-        <div class="hero-rise hero-rise-delay-2 mt-8 flex flex-wrap gap-3">
-          <a href="#oferta" class="inline-flex h-12 items-center gap-1 rounded-full bg-primary px-7 text-base font-semibold text-primary-foreground shadow-[var(--shadow-card)] hover:bg-primary-hover">
-            Solicită ofertă <Icon name="arrow" class="ml-1 h-4 w-4"/>
-          </a>
-          <a href="tel:+40747821384" class="inline-flex h-12 items-center gap-1 rounded-full border-2 border-foreground/15 px-7 text-base font-semibold hover:border-primary hover:text-primary">
-            <Icon name="phone" class="mr-1 h-4 w-4"/> Sună acum
-          </a>
-        </div>
-        <p class="hero-rise hero-rise-delay-2 mt-6 text-sm text-muted-foreground">
-          <span class="font-semibold text-primary">✓</span> Răspuns rapid&nbsp;&nbsp;
-          <span class="font-semibold text-primary">✓</span> Fără costuri ascunse&nbsp;&nbsp;
-          <span class="font-semibold text-primary">✓</span> Rezultate garantate
-        </p>
-      </div>
-      <div>
-        <img src="/images/hero-apartment.jpg" alt="Servicii curățenie apartamente București - GNG PureCare" width="1600" height="1024" loading="eager" fetchpriority="high" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-[var(--shadow-card)]"/>
-      </div>
-    </div>
-  </section>
+  <Hero />
+
 
   <!-- TRUST -->
   <section class="bg-surface">
@@ -104,25 +67,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="bg-background py-20">
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-      <h2 class="font-display text-3xl font-bold md:text-4xl">Servicii pentru orice tip de spațiu</h2>
-      <p class="mt-3 max-w-2xl text-muted-foreground">Alege serviciul potrivit pentru tine. Toate vin cu garanția GNG PureCare.</p>
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        {SERVICES.map(s => (
-          <article class="card-hover flex flex-col rounded-3xl bg-surface p-6">
-            <Icon name={s.icon} class="h-7 w-7 text-primary"/>
-            <h3 class="mt-4 font-display text-xl font-semibold">{s.title}</h3>
-            <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-            <a href={`/servicii#${s.hash}`} class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2">
-              Vezi detalii <Icon name="arrow" class="h-4 w-4"/>
-            </a>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <ServiceCards />
 
   <!-- REASONS -->
   <section class="bg-surface py-20">
@@ -141,39 +86,11 @@ const faqSchema = {
   </section>
 
   <!-- BEFORE / AFTER -->
-  <section class="bg-background py-20">
-    <div class="mx-auto max-w-4xl px-4 md:px-6">
-      <h2 class="font-display text-3xl font-bold md:text-4xl">Rezultate care se văd</h2>
-      <p class="mt-3 max-w-2xl text-muted-foreground">Aceeași încăpere, înainte și după o intervenție GNG PureCare.</p>
-      <div class="mt-12">
-        <BeforeAfterSlider
-          before="/images/before-cleaning.jpg"
-          after="/images/after-cleaning.jpg"
-        />
-      </div>
-    </div>
-  </section>
+  <BeforeAfter />
 
-  <!-- TESTIMONIALS -->
-  <section class="bg-surface py-20">
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-      <h2 class="font-display text-3xl font-bold md:text-4xl">Clienți mulțumiți, spații impecabile</h2>
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        {TESTIMONIALS.map(t => (
-          <figure class="card-hover rounded-3xl bg-card p-6 shadow-[var(--shadow-soft)]">
-            <div class="flex gap-0.5 text-amber-500">
-              {[1,2,3,4,5].map(() => <Icon name="star" class="h-4 w-4 fill-current"/>)}
-            </div>
-            <blockquote class="mt-4 text-sm leading-relaxed">"{t.text}"</blockquote>
-            <figcaption class="mt-5 border-t border-border pt-4">
-              <p class="text-sm font-semibold">{t.name}</p>
-              <p class="text-xs text-muted-foreground">{t.role}</p>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-    </div>
-  </section>
+  <Stats />
+
+  <Testimonials />
 
   <!-- STEPS -->
   <section class="bg-background py-20">
@@ -191,7 +108,7 @@ const faqSchema = {
   </section>
 
   <!-- FORM -->
-  <section id="oferta" class="bg-surface py-20 scroll-mt-20">
+  <section id="contact" class="bg-surface py-20 scroll-mt-20">
     <div class="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-2 md:px-6">
       <div>
         <h2 class="font-display text-3xl font-bold md:text-4xl">Solicită o ofertă rapidă</h2>
@@ -211,21 +128,5 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="bg-background py-20">
-    <div class="mx-auto max-w-3xl px-4 md:px-6">
-      <h2 class="font-display text-3xl font-bold md:text-4xl">Întrebări frecvente</h2>
-      <div class="mt-10 divide-y divide-border rounded-2xl border border-border bg-card">
-        {FAQ.map(f => (
-          <details class="group p-5">
-            <summary class="flex items-center justify-between gap-4 font-semibold">
-              <span>{f.q}</span>
-              <Icon name="chevdown" class="chev h-5 w-5 text-muted-foreground"/>
-            </summary>
-            <p class="mt-3 text-muted-foreground">{f.a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
+  <FaqAccordion items={FAQ} title="Întrebări frecvente" idPrefix="faq" />
 </Layout>
