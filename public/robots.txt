@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /multumim/
+Disallow: /multumim
 
 Sitemap: https://gngpurecare.ro/sitemap-index.xml

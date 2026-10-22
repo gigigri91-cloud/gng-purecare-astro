@@ -39,8 +39,9 @@ const fieldId = (base: string) => `${base}-${instanceId}`;
         autocomplete="tel"
         required
         placeholder="07xx xxx xxx"
-        class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        class="phone-input h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
       />
+      <span id={fieldId('phone-error')} class="phone-error-msg hidden text-xs font-medium text-destructive" role="alert"></span>
     </div>
   </div>
   <div class="grid gap-2">
@@ -95,6 +96,19 @@ const fieldId = (base: string) => `${base}-${instanceId}`;
     </label>
   </div>
 
+  <!-- Zona de feedback si erori generale anti-spam / validare -->
+  <div class="form-feedback hidden rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-center text-xs font-medium text-destructive" role="alert" aria-live="polite"></div>
+
+  <!--
+    NOTA DE SECURITATE / ANTI-SPAM PENTRU DEPLOY:
+    Daca doriti protectie suplimentara cu Cloudflare Turnstile (CAPTCHA invizibil):
+    1. Obtineti un Site Key din panoul Cloudflare -> Turnstile.
+    2. Adaugati scriptul Turnstile: https://challenges.cloudflare.com/turnstile/v0/api.js in Layout.astro sau direct aici.
+    3. Includeti un element <div class="cf-turnstile" data-sitekey="SITE_KEY"></div> inainte de buton.
+    4. Adaugati 'https://challenges.cloudflare.com' in CSP (script-src si frame-src) in public/_headers.
+    5. In Formspree Dashboard activati verificarea automata a Turnstile Secret.
+  -->
+
   <button
     type="submit"
     class="submit-btn mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-base font-semibold text-primary-foreground transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
@@ -122,6 +136,15 @@ const fieldId = (base: string) => `${base}-${instanceId}`;
       if (form.dataset.initialized === 'true') return;
       form.dataset.initialized = 'true';
 
+      const formMountTime = Date.now();
+      const phoneInput = form.querySelector<HTMLInputElement>('.phone-input');
+      const phoneError = form.querySelector<HTMLElement>('.phone-error-msg');
+      const feedbackBox = form.querySelector<HTMLElement>('.form-feedback');
+      const gotchaInput = form.querySelector<HTMLInputElement>('input[name="_gotcha"]');
+      const submitBtn = form.querySelector<HTMLButtonElement>('.submit-btn');
+      const btnText = form.querySelector<HTMLElement>('.btn-text');
+      const btnLoader = form.querySelector<HTMLElement>('.btn-loader');
+
       const select = form.querySelector<HTMLSelectElement>('select[name="service"]');
       if (serviceParam && select) {
         const optionExists = Array.from(select.options).some(opt => opt.value === serviceParam);
@@ -130,11 +153,81 @@ const fieldId = (base: string) => `${base}-${instanceId}`;
         }
       }
 
-      // 2. Prevent double submission & show loading spinner
-      form.addEventListener('submit', () => {
-        const submitBtn = form.querySelector<HTMLButtonElement>('.submit-btn');
-        const btnText = form.querySelector<HTMLElement>('.btn-text');
-        const btnLoader = form.querySelector<HTMLElement>('.btn-loader');
+      // Reset eroare la tastare in campul de telefon
+      if (phoneInput) {
+        phoneInput.addEventListener('input', () => {
+          phoneInput.classList.remove('border-destructive', 'focus:border-destructive');
+          if (phoneError) {
+            phoneError.classList.add('hidden');
+            phoneError.textContent = '';
+          }
+        });
+      }
+
+      // Validare si protectie anti-spam la submit
+      form.addEventListener('submit', (e) => {
+        // Reset feedback
+        if (feedbackBox) {
+          feedbackBox.classList.add('hidden');
+          feedbackBox.textContent = '';
+        }
+
+        // Anti-spam 1: Honeypot check (robotii completeaza campul invizibil)
+        if (gotchaInput && gotchaInput.value.trim().length > 0) {
+          e.preventDefault();
+          return;
+        }
+
+        // Anti-spam 2: Time-trap (completare automata in sub 2 secunde)
+        const elapsedSeconds = (Date.now() - formMountTime) / 1000;
+        if (elapsedSeconds < 2) {
+          e.preventDefault();
+          if (feedbackBox) {
+            feedbackBox.textContent = 'Trimiterea s-a realizat prea rapid. Te rugăm să reîncerci.';
+            feedbackBox.classList.remove('hidden');
+          }
+          return;
+        }
+
+        // Anti-spam 3: Client Rate-Limiting / Cooldown (prevenire spam click si flood)
+        const lastSubmit = sessionStorage.getItem('gng_form_last_submit');
+        if (lastSubmit) {
+          const timeSinceLast = Date.now() - parseInt(lastSubmit, 10);
+          if (timeSinceLast < 45000) {
+            e.preventDefault();
+            const waitSeconds = Math.ceil((45000 - timeSinceLast) / 1000);
+            if (feedbackBox) {
+              feedbackBox.textContent = `Ai trimis deja o solicitare recent. Te rugăm să aștepți încă ${waitSeconds} secunde.`;
+              feedbackBox.classList.remove('hidden');
+            }
+            return;
+          }
+        }
+
+        // Validare stricta a numarului de telefon pentru Romania
+        if (phoneInput) {
+          const rawPhone = phoneInput.value.trim();
+          const cleanedPhone = rawPhone.replace(/[\s\-\.\(\)]/g, '');
+          // Formate valide permise:
+          // 07xxxxxxxx (10 cifre)
+          // +407xxxxxxxx (12 caractere)
+          // 00407xxxxxxxx (13 caractere)
+          const roPhoneRegex = /^(?:(?:\+4|004)0?7\d{8}|07\d{8})$/;
+
+          if (!roPhoneRegex.test(cleanedPhone)) {
+            e.preventDefault();
+            phoneInput.classList.add('border-destructive');
+            if (phoneError) {
+              phoneError.textContent = 'Introdu un număr valid de mobil din România (ex: 0721 234 567 sau +40 721 234 567).';
+              phoneError.classList.remove('hidden');
+            }
+            phoneInput.focus();
+            return;
+          }
+        }
+
+        // Daca toate validarile trec, marcam timestamp-ul in sesiune si afisam starea de incarcare
+        sessionStorage.setItem('gng_form_last_submit', Date.now().toString());
 
         if (submitBtn && btnText && btnLoader) {
           submitBtn.disabled = true;
