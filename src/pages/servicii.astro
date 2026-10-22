@@ -95,7 +95,11 @@ const FAQ = [
                   <p class="mt-0.5 font-medium">{s.duration}</p>
                 </div>
               </div>
-              <a href="/#contact" class="mt-6 inline-flex h-11 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground hover:bg-primary-hover">
+              <a
+                href="#oferta"
+                data-service={s.id === 'apartamente' ? 'apartament' : s.id === 'birouri' ? 'birou' : 'dupa_renovare'}
+                class="mt-6 inline-flex h-11 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground hover:bg-primary-hover"
+              >
                 {s.cta} <Icon name="arrow" class="ml-1 h-4 w-4"/>
               </a>
             </div>
@@ -125,7 +129,11 @@ const FAQ = [
                 <li class="flex items-start gap-2 text-sm"><Icon name="check" class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary"/><span>{x}</span></li>
               ))}
             </ul>
-            <a href="/#contact" class={`mt-6 inline-flex h-11 items-center justify-center rounded-full font-semibold ${p.highlight ? 'bg-primary text-primary-foreground hover:bg-primary-hover' : 'bg-foreground text-background hover:bg-foreground/90'}`}>
+            <a
+              href="#oferta"
+              data-service="apartament"
+              class={`mt-6 inline-flex h-11 items-center justify-center rounded-full font-semibold ${p.highlight ? 'bg-primary text-primary-foreground hover:bg-primary-hover' : 'bg-foreground text-background hover:bg-foreground/90'}`}
+            >
               Cere ofertă {p.name}
             </a>
           </article>

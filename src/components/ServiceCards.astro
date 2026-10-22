@@ -1,28 +1,38 @@
 ---
+import { Image } from 'astro:assets';
+import imgResidential from '../assets/images/service-residential.jpg';
+import imgCommercial from '../assets/images/service-commercial.jpg';
+import imgPostRenovare from '../assets/images/service-post-renovare.jpg';
+import imgEvent from '../assets/images/service-event.jpg';
+
 const SERVICES = [
   {
     title: 'Curățenie rezidențială',
     desc: 'Intervenții regulate sau aprofundate pentru apartamente și case, cu produse sigure și echipă atentă la detalii.',
-    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/57bfc8fb7f58f3247956c992ae5cbe1714468bea.jpg',
+    img: imgResidential,
     alt: 'Echipă de curățenie profesională în apartament rezidențial',
+    slug: 'apartament',
   },
   {
     title: 'Curățenie birouri / spații comerciale',
     desc: 'Spații de lucru curate și profesionale, cu program adaptat orarului firmei și rezultate constante.',
-    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/8443e3de713b2b8db22f561989b3b4b07f0ea316.jpg',
+    img: imgCommercial,
     alt: 'Curățenie profesională birou modern',
+    slug: 'birou',
   },
   {
     title: 'Curățenie post-renovare / post-construcție',
     desc: 'Eliminăm praf fin, urme de vopsea și moloz. Pregătim rapid proprietatea pentru locuire sau închiriere.',
-    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/dc4b4e223807115e03dacf8a9c607893e260cfe3.jpg',
+    img: imgPostRenovare,
     alt: 'Curățenie după renovare, îndepărtare praf și moloz',
+    slug: 'dupa_renovare',
   },
   {
     title: 'Curățenie după eveniment',
     desc: 'Sală, living sau spațiu de primire — readucem ordinea după petreceri, evenimente private sau corporate.',
-    img: 'https://pplx-res.cloudinary.com/image/upload/pplx_search_images/1038a2e7d509e9548f4412366b5c7a436d13271b.jpg',
+    img: imgEvent,
     alt: 'Curățenie sală după eveniment sau petrecere',
+    slug: 'dupa_eveniment',
   },
 ];
 ---
@@ -38,18 +48,18 @@ const SERVICES = [
       {SERVICES.map((s) => (
         <article class="service-card card-hover">
           <div class="card-image">
-            <img
+            <Image
               src={s.img}
               alt={s.alt}
               loading="lazy"
-              width="600"
-              height="400"
+              width={600}
+              height={400}
             />
           </div>
           <div class="card-body">
             <h3>{s.title}</h3>
             <p>{s.desc}</p>
-            <a href="#contact" class="card-cta">Solicită ofertă →</a>
+            <a href="#contact" data-service={s.slug} class="card-cta">Solicită ofertă →</a>
           </div>
         </article>
       ))}

@@ -696,45 +696,14 @@ const STEPS = [
 </style>
 
 <script>
-  function animateCount(el: HTMLElement, target: number, duration = 1500) {
-    const start = performance.now();
-    const update = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      el.textContent = String(Math.round(ease * target));
-      if (progress < 1) requestAnimationFrame(update);
-    };
-    requestAnimationFrame(update);
-  }
+  import { initCounterObserver } from '../utils/animateCount';
 
   function initAboutStats() {
     const section = document.getElementById('about-statistici');
     const grid = section?.querySelector<HTMLElement>('.about-trust__grid');
     const counters = section?.querySelectorAll<HTMLElement>('.about-trust__count');
-    if (!section || !grid || !counters?.length || section.dataset.statsInit === 'true') return;
-    section.dataset.statsInit = 'true';
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const runAnimation = () => {
-      counters.forEach((el) => {
-        const target = Number(el.dataset.count);
-        if (Number.isNaN(target)) return;
-        el.textContent = '0';
-        animateCount(el, target);
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        runAnimation();
-        observer.disconnect();
-      },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0 }
-    );
-
-    observer.observe(grid);
+    if (!grid || !counters?.length) return;
+    initCounterObserver(grid, counters);
   }
 
   initAboutStats();

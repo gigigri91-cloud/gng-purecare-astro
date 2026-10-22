@@ -1,16 +1,22 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { business } from '../data/business';
+import heroBg from '../assets/images/hero-bg.jpg';
 
 const TRUST_ITEMS = ['Răspuns rapid', 'Fără costuri ascunse', 'Rezultate garantate'];
 ---
 
 <section class="hero" aria-label="Introducere">
-  <div
-    class="hero__media"
-    role="img"
-    aria-label="Interior modern curat — servicii de curățenie profesională GNG PureCare"
-  ></div>
+  <div class="hero__media">
+    <Image
+      src={heroBg}
+      alt="Interior modern curat — servicii de curățenie profesională GNG PureCare"
+      loading="eager"
+      fetchpriority="high"
+      class="h-full w-full object-cover object-[center_top]"
+    />
+  </div>
   <div class="hero__overlay" aria-hidden="true"></div>
 
   <div class="hero__inner">
@@ -66,10 +72,13 @@ const TRUST_ITEMS = ['Răspuns rapid', 'Fără costuri ascunse', 'Rezultate gara
     position: absolute;
     inset: 0;
     z-index: 0;
-    background-image: url('https://pplx-res.cloudinary.com/image/upload/pplx_search_images/060ed01be4a5cb32a76de22a995d9d77b6cd2cad.jpg');
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
+  }
+
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
   }
 
   .hero__overlay {

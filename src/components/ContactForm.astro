@@ -11,41 +11,155 @@ interface Props {
 const { instanceId = 'default' } = Astro.props;
 const fieldId = (base: string) => `${base}-${instanceId}`;
 ---
-<form action={FORMSPREE} method="POST" class="relative grid gap-4">
+<form action={FORMSPREE} method="POST" class="contact-form relative grid gap-4" data-instance={instanceId}>
   <input type="hidden" name="_next" value={thankYouUrl}/>
   <div class="pointer-events-none absolute -left-[9999px] top-0 h-px w-px overflow-hidden opacity-0" aria-hidden="true">
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" title="Nu completa acest câmp"/>
   </div>
   <div class="grid gap-4 sm:grid-cols-2">
     <div class="grid gap-2">
-      <label for={fieldId('name')} class="text-sm font-medium">Nume</label>
-      <input id={fieldId('name')} name="name" required placeholder="Ion Popescu" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
+      <label for={fieldId('name')} class="text-sm font-medium">Nume complet <span class="text-primary">*</span></label>
+      <input
+        id={fieldId('name')}
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        placeholder="Ion Popescu"
+        class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      />
     </div>
     <div class="grid gap-2">
-      <label for={fieldId('phone')} class="text-sm font-medium">Telefon</label>
-      <input id={fieldId('phone')} name="phone" required placeholder="07xx xxx xxx" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
+      <label for={fieldId('phone')} class="text-sm font-medium">Telefon <span class="text-primary">*</span></label>
+      <input
+        id={fieldId('phone')}
+        name="phone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        required
+        placeholder="07xx xxx xxx"
+        class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      />
     </div>
   </div>
   <div class="grid gap-2">
-    <label for={fieldId('email')} class="text-sm font-medium">Email</label>
-    <input id={fieldId('email')} name="email" type="email" required placeholder="nume@exemplu.ro" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"/>
+    <label for={fieldId('email')} class="text-sm font-medium">Email <span class="text-primary">*</span></label>
+    <input
+      id={fieldId('email')}
+      name="email"
+      type="email"
+      autocomplete="email"
+      required
+      placeholder="nume@exemplu.ro"
+      class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+    />
   </div>
   <div class="grid gap-2">
-    <label for={fieldId('service')} class="text-sm font-medium">Tip serviciu</label>
-    <select id={fieldId('service')} name="service" class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-      <option value="apartament">Apartament</option>
-      <option value="birou">Birou</option>
-      <option value="dupa_renovare">După renovare</option>
+    <label for={fieldId('service')} class="text-sm font-medium">Tip serviciu <span class="text-primary">*</span></label>
+    <select
+      id={fieldId('service')}
+      name="service"
+      required
+      class="h-11 rounded-md border border-border bg-background px-3 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+    >
+      <option value="" disabled selected>Alege un serviciu...</option>
+      <option value="apartament">Curățenie apartament / rezidențială</option>
+      <option value="birou">Curățenie birou / comercială</option>
+      <option value="dupa_renovare">Curățenie după renovare / construcție</option>
+      <option value="dupa_eveniment">Curățenie după eveniment</option>
+      <option value="alta">Alt tip de curățenie</option>
     </select>
   </div>
   <div class="grid gap-2">
-    <label for={fieldId('message')} class="text-sm font-medium">Mesaj</label>
-    <textarea id={fieldId('message')} name="message" rows="4" placeholder="Suprafață, frecvență, observații..." class="rounded-md border border-border bg-background px-3 py-2 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"></textarea>
+    <label for={fieldId('message')} class="text-sm font-medium">Detalii suplimentare</label>
+    <textarea
+      id={fieldId('message')}
+      name="message"
+      rows="4"
+      placeholder="Suprafață aproximativă (mp), număr de camere, frecvență sau cerințe speciale..."
+      class="rounded-md border border-border bg-background px-3 py-2 text-base focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+    ></textarea>
   </div>
-  <button type="submit" class="mt-2 h-12 rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-    Trimite mesajul
+
+  <div class="flex items-start gap-2.5 pt-1">
+    <input
+      type="checkbox"
+      id={fieldId('gdpr')}
+      name="gdpr_consent"
+      required
+      class="mt-1 h-4 w-4 rounded border-border text-primary accent-primary focus:ring-primary"
+    />
+    <label for={fieldId('gdpr')} class="text-xs leading-relaxed text-muted-foreground">
+      Sunt de acord cu prelucrarea datelor mele cu caracter personal pentru transmiterea ofertei conform <a href="/confidentialitate" class="font-medium text-primary underline hover:text-primary-hover" target="_blank" rel="noopener">Politicii de Confidențialitate</a>. <span class="text-primary">*</span>
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    class="submit-btn mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-base font-semibold text-primary-foreground transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+  >
+    <span class="btn-text">Trimite mesajul</span>
+    <span class="btn-loader hidden">
+      <svg class="h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </span>
   </button>
   <p class="text-center text-xs text-muted-foreground">
-    Răspundem în 24–48 de ore. Datele tale sunt confidențiale.
+    Răspundem de regulă în 24–48 de ore. Datele tale sunt strict confidențiale.
   </p>
 </form>
+
+<script>
+  function setupContactForms() {
+    // 1. Prefill service from URL query params (ex: ?serviciu=birou)
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get('serviciu') || urlParams.get('service');
+
+    document.querySelectorAll<HTMLFormElement>('form.contact-form').forEach((form) => {
+      if (form.dataset.initialized === 'true') return;
+      form.dataset.initialized = 'true';
+
+      const select = form.querySelector<HTMLSelectElement>('select[name="service"]');
+      if (serviceParam && select) {
+        const optionExists = Array.from(select.options).some(opt => opt.value === serviceParam);
+        if (optionExists) {
+          select.value = serviceParam;
+        }
+      }
+
+      // 2. Prevent double submission & show loading spinner
+      form.addEventListener('submit', () => {
+        const submitBtn = form.querySelector<HTMLButtonElement>('.submit-btn');
+        const btnText = form.querySelector<HTMLElement>('.btn-text');
+        const btnLoader = form.querySelector<HTMLElement>('.btn-loader');
+
+        if (submitBtn && btnText && btnLoader) {
+          submitBtn.disabled = true;
+          btnText.textContent = 'Se trimite mesajul...';
+          btnLoader.classList.remove('hidden');
+        }
+      });
+    });
+
+    // 3. Listen for in-page service selection clicks
+    if (!document.body.dataset.serviceListenerAdded) {
+      document.body.dataset.serviceListenerAdded = 'true';
+      document.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement)?.closest<HTMLAnchorElement>('a[data-service]');
+        if (!target) return;
+        const service = target.getAttribute('data-service');
+        if (!service) return;
+        document.querySelectorAll<HTMLSelectElement>('select[name="service"]').forEach((select) => {
+          const exists = Array.from(select.options).some(opt => opt.value === service);
+          if (exists) select.value = service;
+        });
+      });
+    }
+  }
+
+  setupContactForms();
+  document.addEventListener('astro:page-load', setupContactForms);
+</script>

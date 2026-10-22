@@ -7,13 +7,12 @@ const NAV = [
   { href: '/', label: 'Acasă' },
   { href: '/servicii', label: 'Servicii' },
   { href: '/despre', label: 'Despre' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 const isActive = (href: string) => {
-  if (href === '/#contact') return path === '/' || path === '/contact';
   if (href === '/') return path === '/';
-  return path.startsWith(href);
+  return path === href || path.startsWith(`${href}/`);
 };
 ---
 
