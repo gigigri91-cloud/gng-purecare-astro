@@ -1,12 +1,16 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import ContactForm from '../components/ContactForm.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import imgApartment from '../assets/images/service-apartment.jpg';
+import imgOffice from '../assets/images/service-office.jpg';
+import imgRenovation from '../assets/images/service-renovation.jpg';
 
 const SERVICES = [
   {
-    id:'apartamente', icon:'sparkles', img:'/images/service-apartment.jpg',
+    id:'apartamente', icon:'sparkles', img: imgApartment,
     h2:'Servicii curățenie apartamente București',
     intro:'Curățenie generală sau aprofundată pentru locuințe, executată de o echipă antrenată să acorde atenție fiecărui detaliu. Lucrăm la apartamente, garsoniere, case și duplexuri din București și împrejurimi.',
     includes:['Aspirare și mopuit toate camerele și holurile','Bucătărie completă: blat, dulapuri, aragaz, hotă, chiuvetă','Băi dezinfectate: faianță, gresie, cabină duș, oglinzi','Ștergere praf pe toate suprafețele și obiectele decorative','Curățare ferestre interior și ramă'],
@@ -14,7 +18,7 @@ const SERVICES = [
     duration:'3–6 ore (în funcție de suprafață)', durationIcon:'clock', extraLabel:'Durată estimată', cta:'Solicită ofertă pentru apartament'
   },
   {
-    id:'birouri', icon:'building', img:'/images/service-office.jpg',
+    id:'birouri', icon:'building', img: imgOffice,
     h2:'Curățenie profesională birouri și spații comerciale',
     intro:'Spații de lucru curate, ordonate și profesionale, cu programe adaptate orarului firmei tale. Discreție totală, personal verificat și rezultate constante de la o vizită la alta.',
     includes:['Aspirare mochete și mopuit pardoseli','Curățare birouri, mese de ședință și echipamente IT','Igienizare grupuri sanitare și kitchenette','Reumplere consumabile (hârtie, săpun, prosoape)','Golire coșuri de gunoi și colectare selectivă','Spălare ferestre și suprafețe sticlă (programat)'],
@@ -22,7 +26,7 @@ const SERVICES = [
     duration:'Zilnic, de 2–3 ori/săptămână, săptămânal sau lunar', durationIcon:'calendar', extraLabel:'Frecvență recomandată', cta:'Solicită ofertă pentru birou'
   },
   {
-    id:'renovare', icon:'hardhat', img:'/images/service-renovation.jpg',
+    id:'renovare', icon:'hardhat', img: imgRenovation,
     h2:'Curățenie după renovare București — rezultate garantate',
     intro:'Eliminăm praful fin de construcție, urmele de vopsea, var, mortar și adezivi. Pregătim rapid proprietatea pentru locuire, vânzare sau închiriere — totul gata de mutare.',
     includes:['Eliminarea prafului fin de pe toate suprafețele','Curățarea urmelor de vopsea, var și adezivi','Spălarea ferestrelor și a tâmplăriei (interior + exterior accesibil)','Polișarea gresiei, parchetului și a pardoselilor','Igienizarea completă a băilor și bucătăriei','Curățare instalații sanitare și electrice de praf'],
@@ -70,7 +74,7 @@ const FAQ = [
         {SERVICES.map((s, i) => (
           <article id={s.id} class={`grid gap-10 md:grid-cols-2 md:items-center scroll-mt-20 ${i%2===1 ? 'md:[&>div:first-child]:order-2' : ''}`}>
             <div>
-              <img src={s.img} alt={s.h2} loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-[var(--shadow-card)]"/>
+              <Image src={s.img} alt={s.h2} loading="lazy" width={800} height={600} class="aspect-[4/3] w-full rounded-3xl object-cover shadow-[var(--shadow-card)]"/>
             </div>
             <div>
               <Icon name={s.icon} class="h-7 w-7 text-primary"/>

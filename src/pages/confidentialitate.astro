@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import { business } from '../data/business';
-const today = new Date().toLocaleDateString('ro-RO', { year:'numeric', month:'long', day:'numeric' });
+const lastUpdated = '22 octombrie 2026';
 ---
 <Layout
   title="Politică de confidențialitate | GNG PureCare"
@@ -17,7 +17,7 @@ const today = new Date().toLocaleDateString('ro-RO', { year:'numeric', month:'lo
       <span class="font-medium text-foreground">Confidențialitate</span>
     </nav>
     <h1 class="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl">Politică de confidențialitate</h1>
-    <p class="mt-3 text-sm text-muted-foreground">Ultima actualizare: {today}</p>
+    <p class="mt-3 text-sm text-muted-foreground">Ultima actualizare: {lastUpdated}</p>
 
     <div class="mt-10 space-y-6 text-base leading-relaxed">
       <h2 class="font-display text-2xl font-bold">1. Cine suntem</h2>
