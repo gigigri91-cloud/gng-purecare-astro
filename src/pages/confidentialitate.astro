@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
+import { business } from '../data/business';
 const today = new Date().toLocaleDateString('ro-RO', { year:'numeric', month:'long', day:'numeric' });
 ---
 <Layout
@@ -59,7 +60,7 @@ const today = new Date().toLocaleDateString('ro-RO', { year:'numeric', month:'lo
       <p>Browserul tău poate stoca cookie-uri strict necesare pentru funcționarea sesiunii sau a formularului, în limitele tehnice obișnuite. Poți gestiona cookie-urile din setările browserului.</p>
 
       <h2 class="font-display text-2xl font-bold">9. Contact</h2>
-      <p>Scrie-ne la <a href="mailto:contact@gngpurecare.ro" class="text-primary underline">contact@gngpurecare.ro</a> sau sună la <a href="tel:+40747821384" class="text-primary underline">0747 821 384</a>.</p>
+      <p>Scrie-ne la <a href={`mailto:${business.email}`} class="text-primary underline">{business.email}</a> sau sună la <a href={business.telephoneHref} class="text-primary underline">{business.telephoneDisplay}</a>.</p>
     </div>
   </section>
 </Layout>

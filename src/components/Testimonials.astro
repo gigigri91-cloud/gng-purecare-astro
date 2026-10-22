@@ -28,9 +28,7 @@ const TESTIMONIALS = [
     <div class="testimonials-grid mt-12">
       {TESTIMONIALS.map((t) => (
         <article class="testimonial-card">
-          <div class="stars" aria-label="Rating: 5 din 5 stele">
-            ★★★★★
-          </div>
+          <span class="testimonial-badge">Client GNG PureCare</span>
           <blockquote>„{t.text}"</blockquote>
           <footer>
             <div class="avatar" aria-hidden="true">{t.initial}</div>
@@ -67,15 +65,22 @@ const TESTIMONIALS = [
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   }
 
-  .stars {
-    color: #008080;
-    font-size: 1.25rem;
-    letter-spacing: 2px;
-    line-height: 1;
+  .testimonial-badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #00695c;
+    background: #e0f2f1;
+    line-height: 1.3;
   }
 
   .testimonial-card blockquote {
-    margin: 1rem 0 0;
+    margin: 0.85rem 0 0;
     flex: 1;
     font-size: 0.9375rem;
     font-style: italic;

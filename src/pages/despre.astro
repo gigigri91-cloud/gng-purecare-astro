@@ -4,6 +4,7 @@ import Icon from '../components/Icon.astro';
 import { Image } from 'astro:assets';
 import josueHero from '../assets/images/josue-michel-MwxsRSG1A2s-unsplash.jpg';
 import feeyEco from '../assets/images/feey-ZnK3vfLzUg4-unsplash.jpg';
+import { TRUST_STATS } from '../data/stats';
 
 const VALUES = [
   { icon: 'sparkles', title: 'Curățenie', desc: 'Standarde clare de igienă și finisare impecabilă la fiecare intervenție.' },
@@ -27,12 +28,6 @@ const STEPS = [
   { n: '03', title: 'Verificăm rezultatul', desc: 'Inspectăm împreună finisajul — garanția noastră de satisfacție rămâne activă.' },
 ];
 
-const TRUST_STATS = [
-  { count: 100, suffix: '+', label: 'spații curățate' },
-  { count: 99, suffix: '%', label: 'clienți mulțumiți' },
-  { count: 4, suffix: '', label: 'ani de experiență' },
-  { count: 24, suffix: 'h', label: 'răspuns la ofertă' },
-];
 ---
 
 <Layout
@@ -197,7 +192,7 @@ const TRUST_STATS = [
         {TRUST_STATS.map((stat) => (
           <div class="about-trust__item">
             <p class="about-trust__value">
-              <span class="about-trust__count" data-count={stat.count}>0</span>
+              <span class="about-trust__count" data-count={stat.count}>{stat.count}</span>
               {stat.suffix && <span>{stat.suffix}</span>}
             </p>
             <p class="about-trust__label">{stat.label}</p>
@@ -701,45 +696,45 @@ const TRUST_STATS = [
 </style>
 
 <script>
+  function animateCount(el: HTMLElement, target: number, duration = 1500) {
+    const start = performance.now();
+    const update = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(ease * target));
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
   function initAboutStats() {
     const section = document.getElementById('about-statistici');
+    const grid = section?.querySelector<HTMLElement>('.about-trust__grid');
     const counters = section?.querySelectorAll<HTMLElement>('.about-trust__count');
-    if (!section || !counters?.length || section.dataset.init === 'true') return;
-    section.dataset.init = 'true';
+    if (!section || !grid || !counters?.length || section.dataset.statsInit === 'true') return;
+    section.dataset.statsInit = 'true';
 
-    const animateCount = (el: HTMLElement, target: number, duration = 1500) => {
-      const start = performance.now();
-      const update = (now: number) => {
-        const progress = Math.min((now - start) / duration, 1);
-        const ease = 1 - Math.pow(1 - progress, 3);
-        el.textContent = String(Math.round(ease * target));
-        if (progress < 1) requestAnimationFrame(update);
-      };
-      requestAnimationFrame(update);
-    };
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) {
+    const runAnimation = () => {
       counters.forEach((el) => {
-        const t = Number(el.dataset.count);
-        if (!Number.isNaN(t)) el.textContent = String(t);
+        const target = Number(el.dataset.count);
+        if (Number.isNaN(target)) return;
+        el.textContent = '0';
+        animateCount(el, target);
       });
-      return;
-    }
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          const t = Number(el.dataset.count);
-          if (!Number.isNaN(t)) animateCount(el, t);
-          observer.unobserve(el);
-        });
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        runAnimation();
+        observer.disconnect();
       },
-      { threshold: 0.35 }
+      { rootMargin: '0px 0px -10% 0px', threshold: 0 }
     );
-    counters.forEach((el) => observer.observe(el));
+
+    observer.observe(grid);
   }
 
   initAboutStats();

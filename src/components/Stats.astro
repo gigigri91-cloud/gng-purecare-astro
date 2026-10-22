@@ -1,20 +1,15 @@
 ---
-const STATS = [
-  { count: 100, suffix: '+', label: 'spații curățate' },
-  { count: 99, suffix: '%', label: 'clienți mulțumiți' },
-  { count: 4, suffix: '', label: 'ani de experiență' },
-  { count: 24, suffix: 'h', label: 'răspuns la ofertă' },
-];
+import { TRUST_STATS } from '../data/stats';
 ---
 
 <section id="statistici" class="stats-section" aria-labelledby="statistici-title">
   <div class="stats-wrap">
     <h2 id="statistici-title" class="stats-title">GNG PureCare în cifre</h2>
     <div class="stats-grid">
-      {STATS.map((stat) => (
+      {TRUST_STATS.map((stat) => (
         <div class="stats-item">
           <p class="stats-value">
-            <span class="stats-count" data-count={stat.count}>0</span>
+            <span class="stats-count" data-count={stat.count}>{stat.count}</span>
             {stat.suffix && <span class="stats-suffix">{stat.suffix}</span>}
           </p>
           <p class="stats-label">{stat.label}</p>
@@ -95,33 +90,36 @@ const STATS = [
     requestAnimationFrame(update);
   }
 
-  const section = document.getElementById('statistici');
-  const counters = section?.querySelectorAll<HTMLElement>('[data-count]');
+  function initHomeStats() {
+    const section = document.getElementById('statistici');
+    const grid = section?.querySelector<HTMLElement>('.stats-grid');
+    const counters = section?.querySelectorAll<HTMLElement>('.stats-count');
+    if (!section || !grid || !counters?.length || section.dataset.statsInit === 'true') return;
+    section.dataset.statsInit = 'true';
 
-  if (section && counters?.length) {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    if (reducedMotion) {
+    const runAnimation = () => {
       counters.forEach((el) => {
         const target = Number(el.dataset.count);
-        if (!Number.isNaN(target)) el.textContent = String(target);
+        if (Number.isNaN(target)) return;
+        el.textContent = '0';
+        animateCount(el, target);
       });
-    } else {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
+    };
 
-            const el = entry.target as HTMLElement;
-            const target = Number(el.dataset.count);
-            if (!Number.isNaN(target)) animateCount(el, target);
-            observer.unobserve(el);
-          });
-        },
-        { threshold: 0.35 }
-      );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        runAnimation();
+        observer.disconnect();
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0 }
+    );
 
-      counters.forEach((el) => observer.observe(el));
-    }
+    observer.observe(grid);
   }
+
+  initHomeStats();
+  document.addEventListener('astro:page-load', initHomeStats);
 </script>

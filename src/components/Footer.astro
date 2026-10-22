@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { business } from '../data/business';
 import { hasSocialLinks, socialLinks } from '../data/social';
 
 const year = new Date().getFullYear();
@@ -61,8 +62,8 @@ const showSocial = hasSocialLinks();
     <div>
       <h3 class="mb-4 text-sm font-semibold">Contact</h3>
       <ul class="space-y-3 text-sm text-muted-foreground">
-        <li class="flex items-start gap-2"><Icon name="phone" class="mt-0.5 h-4 w-4 text-primary"/><a href="tel:+40747821384" class="hover:text-primary">0747 821 384</a></li>
-        <li class="flex items-start gap-2"><Icon name="mail" class="mt-0.5 h-4 w-4 text-primary"/><a href="mailto:contact@gngpurecare.ro" class="hover:text-primary">contact@gngpurecare.ro</a></li>
+        <li class="flex items-start gap-2"><Icon name="phone" class="mt-0.5 h-4 w-4 text-primary"/><a href={business.telephoneHref} class="hover:text-primary">{business.telephoneDisplay}</a></li>
+        <li class="flex items-start gap-2"><Icon name="mail" class="mt-0.5 h-4 w-4 text-primary"/><a href={`mailto:${business.email}`} class="hover:text-primary">{business.email}</a></li>
         <li class="flex items-start gap-2"><Icon name="pin" class="mt-0.5 h-4 w-4 text-primary"/><span>București, România</span></li>
       </ul>
     </div>

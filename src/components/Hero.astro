@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { business } from '../data/business';
 
 const TRUST_ITEMS = ['Răspuns rapid', 'Fără costuri ascunse', 'Rezultate garantate'];
 ---
@@ -32,7 +33,7 @@ const TRUST_ITEMS = ['Răspuns rapid', 'Fără costuri ascunse', 'Rezultate gara
           Solicită ofertă
           <Icon name="arrow" class="h-4 w-4" />
         </a>
-        <a href="tel:+40747821384" class="hero__cta hero__cta--secondary">
+        <a href={business.telephoneHref} class="hero__cta hero__cta--secondary">
           <Icon name="phone" class="h-4 w-4" />
           Sună acum
         </a>

@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { business } from '../data/business';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const NAV = [
@@ -55,12 +56,16 @@ const isActive = (href: string) => {
     </nav>
 
     <div class="header-actions">
-      <a href="tel:+40747821384" class="header-phone">
+      <a href={business.telephoneHref} class="header-phone">
         <Icon name="phone" class="header-phone__icon" />
-        0747 821 384
+        {business.telephoneDisplay}
       </a>
       <a href="/#contact" class="btn-cta">Solicită ofertă</a>
     </div>
+
+    <a href={business.telephoneHref} class="mobile-header-phone" aria-label="Sună la GNG PureCare">
+      <Icon name="phone" class="mobile-header-phone__icon" />
+    </a>
 
     <details class="mobile-menu">
       <summary class="hamburger-btn mobile-menu__toggle" aria-label="Deschide meniul">
@@ -84,9 +89,9 @@ const isActive = (href: string) => {
               </li>
             ))}
           </ul>
-          <a href="tel:+40747821384" class="mobile-nav-phone">
+          <a href={business.telephoneHref} class="mobile-nav-phone">
             <Icon name="phone" class="h-4 w-4" />
-            0747 821 384
+            {business.telephoneDisplay}
           </a>
           <a href="/#contact" class="btn-cta btn-cta--mobile">Solicită ofertă</a>
         </nav>
@@ -366,6 +371,36 @@ const isActive = (href: string) => {
     flex-shrink: 0;
   }
 
+  .mobile-header-phone {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-header-phone__icon {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .site-header.scrolled .mobile-header-phone {
+    border-color: rgba(0, 128, 128, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    color: #1a1a1a;
+  }
+
+  .mobile-header-phone:focus-visible {
+    outline: 2px solid #008080;
+    outline-offset: 2px;
+  }
+
   .hamburger-btn {
     display: flex;
     align-items: center;
@@ -508,6 +543,12 @@ const isActive = (href: string) => {
 
     .mobile-menu {
       display: block;
+      margin-left: 0.25rem;
+    }
+
+    .mobile-header-phone {
+      display: inline-flex;
+      margin-left: auto;
     }
 
     .site-header,
@@ -553,6 +594,7 @@ const isActive = (href: string) => {
     .nav-indicator,
     .nav-link,
     .header-phone,
+    .mobile-header-phone,
     .btn-cta,
     .mobile-menu__toggle {
       transition: none;

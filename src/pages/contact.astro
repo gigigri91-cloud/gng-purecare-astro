@@ -2,13 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import ContactForm from '../components/ContactForm.astro';
+import { business } from '../data/business';
 import { hasSocialLinks, socialLinks } from '../data/social';
 
 const showSocial = hasSocialLinks();
 
 const INFO = [
-  { icon:'phone', label:'Telefon', value:'0747 821 384', href:'tel:+40747821384' },
-  { icon:'mail', label:'Email', value:'contact@gngpurecare.ro', href:'mailto:contact@gngpurecare.ro' },
+  { icon:'phone', label:'Telefon', value: business.telephoneDisplay, href: business.telephoneHref },
+  { icon:'mail', label:'Email', value: business.email, href: `mailto:${business.email}` },
   { icon:'pin', label:'Adresă', value:'București, România', href:null },
   { icon:'clock', label:'Program', value:'Luni–Sâmbătă, 08:00–20:00', href:null },
 ];
@@ -20,7 +21,9 @@ const SOCIAL_ENTRIES = [
 ---
 <Layout
   title="Contact GNG PureCare | Servicii Curățenie București"
-  description="Contactează GNG PureCare pentru servicii de curățenie profesională în București. Răspundem în 24–48 ore.">
+  description="Contactează GNG PureCare pentru servicii de curățenie profesională în București. Răspundem în 24–48 ore."
+  schemaPage="contact"
+>
 
   <section class="bg-surface py-16 md:py-20">
     <div class="mx-auto max-w-5xl px-4 md:px-6">

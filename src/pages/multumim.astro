@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
+import { business } from '../data/business';
 ---
 <Layout
   title="Mesaj trimis | GNG PureCare"
@@ -16,7 +17,7 @@ import Icon from '../components/Icon.astro';
         Am primit mesajul tău. Revenim în <strong class="text-foreground">24–48 de ore</strong> cu o ofertă personalizată, de obicei mai devreme.
       </p>
       <p class="mt-3 text-sm text-muted-foreground">
-        Dacă ai nevoie urgent, sună-ne la <a href="tel:+40747821384" class="font-semibold text-primary hover:underline">0747 821 384</a>.
+        Dacă ai nevoie urgent, sună-ne la <a href={business.telephoneHref} class="font-semibold text-primary hover:underline">{business.telephoneDisplay}</a>.
       </p>
       <div class="mt-10 flex flex-wrap justify-center gap-3">
         <a href="/" class="inline-flex h-12 items-center rounded-full bg-primary px-7 text-sm font-semibold text-primary-foreground hover:bg-primary-hover">
