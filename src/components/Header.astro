@@ -3,6 +3,7 @@ import Icon from './Icon.astro';
 import { business } from '../data/business';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = path === '/';
 const NAV = [
   { href: '/', label: 'Acasă' },
   { href: '/servicii', label: 'Servicii' },
@@ -16,7 +17,7 @@ const isActive = (href: string) => {
 };
 ---
 
-<header id="main-header" class="site-header">
+<header id="main-header" class:list={['site-header', isHome ? 'is-home' : 'is-internal']}>
   <div class="header-inner">
     <a href="/" class="navbar__logo" aria-label="GNG PureCare - Acasă">
       <img
@@ -112,13 +113,21 @@ const isActive = (href: string) => {
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  .site-header.is-internal {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 128, 128, 0.12);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  }
+
   .site-header.scrolled {
     width: min(860px, 90vw);
     left: 50%;
     transform: translateX(-50%);
     top: 16px;
     border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(0, 128, 128, 0.15);
@@ -159,11 +168,12 @@ const isActive = (href: string) => {
     transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .site-header:not(.scrolled) .navbar__logo-mark {
+  .site-header.is-home:not(.scrolled) .navbar__logo-mark {
     filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
   }
 
-  .site-header.scrolled .navbar__logo-mark {
+  .site-header.scrolled .navbar__logo-mark,
+  .site-header.is-internal .navbar__logo-mark {
     filter: none;
   }
 
@@ -189,28 +199,31 @@ const isActive = (href: string) => {
     letter-spacing: -0.03em;
   }
 
-  .site-header:not(.scrolled) .navbar__logo-gng,
-  .site-header:not(.scrolled) .navbar__logo-brand,
-  .site-header:not(.scrolled) .navbar__logo-care {
+  .site-header.is-home:not(.scrolled) .navbar__logo-gng,
+  .site-header.is-home:not(.scrolled) .navbar__logo-brand,
+  .site-header.is-home:not(.scrolled) .navbar__logo-care {
     color: #ffffff;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   }
 
-  .site-header:not(.scrolled) .navbar__logo-care {
+  .site-header.is-home:not(.scrolled) .navbar__logo-care {
     color: rgba(255, 255, 255, 0.92);
   }
 
-  .site-header.scrolled .navbar__logo-gng {
+  .site-header.scrolled .navbar__logo-gng,
+  .site-header.is-internal .navbar__logo-gng {
     color: #00695c;
     text-shadow: none;
   }
 
-  .site-header.scrolled .navbar__logo-brand {
+  .site-header.scrolled .navbar__logo-brand,
+  .site-header.is-internal .navbar__logo-brand {
     color: #008080;
     text-shadow: none;
   }
 
-  .site-header.scrolled .navbar__logo-care {
+  .site-header.scrolled .navbar__logo-care,
+  .site-header.is-internal .navbar__logo-care {
     color: #2d9a8a;
     text-shadow: none;
   }
@@ -266,26 +279,30 @@ const isActive = (href: string) => {
     text-decoration: none;
     border-radius: 9999px;
     will-change: transform;
+    color: #1a1a1a;
   }
 
-  .site-header:not(.scrolled) .nav-link {
+  .site-header.is-home:not(.scrolled) .nav-link {
     color: #ffffff;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   }
 
-  .site-header:not(.scrolled) .nav-link:hover,
-  .site-header:not(.scrolled) .nav-link.is-active {
+  .site-header.is-home:not(.scrolled) .nav-link:hover,
+  .site-header.is-home:not(.scrolled) .nav-link.is-active {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.12);
   }
 
-  .site-header.scrolled .nav-link {
+  .site-header.scrolled .nav-link,
+  .site-header.is-internal .nav-link {
     color: #1a1a1a;
     text-shadow: none;
   }
 
   .site-header.scrolled .nav-link:hover,
-  .site-header.scrolled .nav-link.is-active {
+  .site-header.scrolled .nav-link.is-active,
+  .site-header.is-internal .nav-link:hover,
+  .site-header.is-internal .nav-link.is-active {
     color: #008080;
     background: rgba(0, 128, 128, 0.08);
   }
@@ -314,17 +331,19 @@ const isActive = (href: string) => {
     height: 1rem;
   }
 
-  .site-header:not(.scrolled) .header-phone {
+  .site-header.is-home:not(.scrolled) .header-phone {
     color: #ffffff;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   }
 
-  .site-header.scrolled .header-phone {
+  .site-header.scrolled .header-phone,
+  .site-header.is-internal .header-phone {
     color: #1a1a1a;
     text-shadow: none;
   }
 
-  .site-header.scrolled .header-phone:hover {
+  .site-header.scrolled .header-phone:hover,
+  .site-header.is-internal .header-phone:hover {
     color: #008080;
   }
 
@@ -347,7 +366,7 @@ const isActive = (href: string) => {
       box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .site-header:not(.scrolled) .btn-cta {
+  .site-header.is-home:not(.scrolled) .btn-cta {
     background: #ffffff;
     color: #008080;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -358,9 +377,21 @@ const isActive = (href: string) => {
     transform: translateY(-1px);
   }
 
-  .site-header:not(.scrolled) .btn-cta:hover {
+  .site-header.is-home:not(.scrolled) .btn-cta:hover {
     background: #f0fafa;
     color: #005f5f;
+  }
+
+  .site-header.scrolled .btn-cta,
+  .site-header.is-internal .btn-cta {
+    background: #008080;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 128, 128, 0.25);
+  }
+
+  .site-header.scrolled .btn-cta:hover,
+  .site-header.is-internal .btn-cta:hover {
+    background: #005f5f;
   }
 
   /* Mobile menu */
@@ -389,7 +420,8 @@ const isActive = (href: string) => {
     height: 1.1rem;
   }
 
-  .site-header.scrolled .mobile-header-phone {
+  .site-header.scrolled .mobile-header-phone,
+  .site-header.is-internal .mobile-header-phone {
     border-color: rgba(0, 128, 128, 0.2);
     background: rgba(255, 255, 255, 0.9);
     color: #1a1a1a;
@@ -419,7 +451,8 @@ const isActive = (href: string) => {
     display: none;
   }
 
-  .site-header.scrolled .hamburger-btn {
+  .site-header.scrolled .hamburger-btn,
+  .site-header.is-internal .hamburger-btn {
     border-color: rgba(0, 128, 128, 0.2);
     background: rgba(255, 255, 255, 0.9);
     color: #1a1a1a;
