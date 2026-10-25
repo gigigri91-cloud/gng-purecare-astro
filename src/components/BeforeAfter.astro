@@ -1,6 +1,11 @@
 ---
-import afterImg from '../assets/images/after-cleaning.jpg';
-import beforeImg from '../assets/images/before-cleaning.jpg';
+import { getImage } from 'astro:assets';
+import afterSrc from '../assets/images/after-cleaning.jpg';
+import beforeSrc from '../assets/images/before-cleaning.jpg';
+
+// Optimizare WebP; păstrăm <img> simplu (fără <picture>) ca stilurile no-drag să se aplice direct.
+const afterImg = await getImage({ src: afterSrc, width: 1280, format: 'webp' });
+const beforeImg = await getImage({ src: beforeSrc, width: 1280, format: 'webp' });
 ---
 
 <section class="ba-section">
@@ -17,9 +22,9 @@ import beforeImg from '../assets/images/before-cleaning.jpg';
         <img
           src={afterImg.src}
           alt="Apartament după curățenie profesională GNG PureCare"
-          width={afterImg.width}
-          height={afterImg.height}
-          loading="eager"
+          width={afterImg.attributes.width}
+          height={afterImg.attributes.height}
+          loading="lazy"
           decoding="async"
           style="width: 100%; height: 100%; object-fit: cover;"
         />
@@ -28,9 +33,9 @@ import beforeImg from '../assets/images/before-cleaning.jpg';
         <img
           src={beforeImg.src}
           alt="Apartament înainte de curățenie"
-          width={beforeImg.width}
-          height={beforeImg.height}
-          loading="eager"
+          width={beforeImg.attributes.width}
+          height={beforeImg.attributes.height}
+          loading="lazy"
           decoding="async"
           style="width: 100%; height: 100%; object-fit: cover;"
         />
