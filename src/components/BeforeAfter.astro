@@ -30,7 +30,7 @@ import beforeImg from '../assets/images/before-cleaning.jpg';
           alt="Apartament înainte de curățenie"
           width={beforeImg.width}
           height={beforeImg.height}
-          loading="lazy"
+          loading="eager"
           decoding="async"
           style="width: 100%; height: 100%; object-fit: cover;"
         />
@@ -100,6 +100,8 @@ import beforeImg from '../assets/images/before-cleaning.jpg';
     object-fit: cover;
     display: block;
     pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
   }
   .ba-before {
     clip-path: inset(0 50% 0 0);
@@ -167,59 +169,71 @@ import beforeImg from '../assets/images/before-cleaning.jpg';
 </style>
 
 <script>
-  const slider = document.getElementById('baSlider');
-  const before = document.getElementById('baBefore');
-  const handle = document.getElementById('baHandle');
+  function initBeforeAfterSlider() {
+    const slider = document.getElementById('baSlider');
+    const before = document.getElementById('baBefore');
+    const handle = document.getElementById('baHandle');
 
-  if (slider && before && handle) {
-    let dragging = false;
+    if (slider && before && handle) {
+      if (slider.dataset.sliderInit === 'true') return;
+      slider.dataset.sliderInit = 'true';
 
-    function setPosition(clientX: number) {
-      const rect = slider!.getBoundingClientRect();
-      let pct = (clientX - rect.left) / rect.width;
-      pct = Math.min(Math.max(pct, 0.05), 0.95);
-      before!.style.clipPath = `inset(0 ${(1 - pct) * 100}% 0 0)`;
-      handle!.style.left = `${pct * 100}%`;
-    }
+      let dragging = false;
 
-    slider.addEventListener('mousedown', (e) => {
-      dragging = true;
-      setPosition(e.clientX);
-    });
-    window.addEventListener('mousemove', (e) => {
-      if (dragging) setPosition(e.clientX);
-    });
-    window.addEventListener('mouseup', () => {
-      dragging = false;
-    });
+      function setPosition(clientX: number) {
+        const rect = slider!.getBoundingClientRect();
+        let pct = (clientX - rect.left) / rect.width;
+        pct = Math.min(Math.max(pct, 0.03), 0.97);
+        before!.style.clipPath = `inset(0 ${(1 - pct) * 100}% 0 0)`;
+        handle!.style.left = `${pct * 100}%`;
+      }
 
-    slider.addEventListener(
-      'touchstart',
-      (e) => {
+      slider.addEventListener('mousedown', (e) => {
         dragging = true;
-        setPosition(e.touches[0].clientX);
-      },
-      { passive: true }
-    );
-    window.addEventListener(
-      'touchmove',
-      (e) => {
-        if (dragging) setPosition(e.touches[0].clientX);
-      },
-      { passive: true }
-    );
-    window.addEventListener('touchend', () => {
-      dragging = false;
-    });
+        setPosition(e.clientX);
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (dragging) setPosition(e.clientX);
+      });
+      window.addEventListener('mouseup', () => {
+        dragging = false;
+      });
 
-    slider.setAttribute('tabindex', '0');
-    slider.setAttribute('role', 'slider');
-    slider.setAttribute('aria-label', 'Slider înainte și după curățenie');
-    slider.addEventListener('keydown', (e) => {
-      const rect = slider.getBoundingClientRect();
-      const current = parseFloat(handle.style.left || '50') / 100;
-      if (e.key === 'ArrowLeft') setPosition(rect.left + (current - 0.05) * rect.width);
-      if (e.key === 'ArrowRight') setPosition(rect.left + (current + 0.05) * rect.width);
-    });
+      slider.addEventListener(
+        'touchstart',
+        (e) => {
+          dragging = true;
+          setPosition(e.touches[0].clientX);
+        },
+        { passive: true }
+      );
+      window.addEventListener(
+        'touchmove',
+        (e) => {
+          if (dragging) setPosition(e.touches[0].clientX);
+        },
+        { passive: true }
+      );
+      window.addEventListener('touchend', () => {
+        dragging = false;
+      });
+
+      slider.setAttribute('tabindex', '0');
+      slider.setAttribute('role', 'slider');
+      slider.setAttribute('aria-label', 'Slider înainte și după curățenie');
+      slider.addEventListener('keydown', (e) => {
+        const rect = slider!.getBoundingClientRect();
+        const current = parseFloat(handle!.style.left || '50') / 100;
+        if (e.key === 'ArrowLeft') setPosition(rect.left + (current - 0.05) * rect.width);
+        if (e.key === 'ArrowRight') setPosition(rect.left + (current + 0.05) * rect.width);
+      });
+    }
   }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBeforeAfterSlider);
+  } else {
+    initBeforeAfterSlider();
+  }
+  document.addEventListener('astro:page-load', initBeforeAfterSlider);
 </script>
