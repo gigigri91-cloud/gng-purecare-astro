@@ -11,7 +11,20 @@ dist/
 !.dev.vars.example
 !.env.example
 
-# Documentatie interna
+# Documente informative pentru agent si documentatie interna
+AGENTS.md
+GEMINI.md
+.agents/
 docs_interne/
+docs/
+SECURITY.md
+CHANGELOG.md
+*ANALIZA*
+*audit*
+*DOCUMENTATIE*
+*prompt*
+*PROMPT*
+*.doc
+*.docx
 *.backup
 
